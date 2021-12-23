@@ -17,7 +17,7 @@ export const getById = async (id: number): Promise<User> => {
 
 export const getByEmail = async (email: string): Promise<User> => {
   const userRepository: Repository<User> = getRepository(User);
-  return await userRepository.findOneOrFail({
+  return await userRepository.findOne({
     where: {
       email
     },

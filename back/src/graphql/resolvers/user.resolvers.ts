@@ -20,15 +20,17 @@ export default {
   },
   Mutation: {
     async registerUser(parent, args, context, info) {
-      const { name, email, password } = args;
+      const { name, email, password } = args.newUser;
       if(!name || !email || !password) throw new ApolloError('Some information is missing!', '400');
 
       const passwordHash = await bcrypt.hash(password, authConfig.bcrypt.saltRounds);
       const emailExist: User = await getByEmail(email);
-      if(emailExist) throw new ApolloError('Email is already taken!', '401');
-
-      args.password = passwordHash;
-      return await createUser(args);
+      if(emailExist) {
+        throw new ApolloError('Email is already taken!', '401');
+      } else {
+        args.newUser.password = passwordHash;
+        return await createUser(args.newUser);
+      }
     },
     async updateUser(parent, args, context, info) {
       // update user
