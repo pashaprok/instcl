@@ -10,17 +10,17 @@ export const ormConfig: ConnectionOptions = {
   synchronize: true,
   logging: false,
   // seeds: [
-  //     'seeds/**/*{.ts,.js}'
+  //     '../seeds/**/*{.ts,.js}'
   // ],
   // factories: [
-  //     'factories/**/*{.ts,.js}'
-  // ],
-  entities: ['entities/**/*{.ts,.js}'],
-  migrations: ['migration/**/*{.ts,.js}'],
-  subscribers: ['subscriber/**/*{.ts,.js}'],
+  //     '../factories/**/*{.ts,.js}'
+  // ],0
+  entities: [`${__dirname}/../entities/**/*{.ts,.js}`],
+  migrations: ['../migrations/**/*{.ts,.js}'],
+  subscribers: ['../subscribers/**/*{.ts,.js}'],
   cli: {
     entitiesDir: 'entities',
-    migrationsDir: 'migration',
-    subscribersDir: 'subscriber',
+    migrationsDir: 'migrations',
+    subscribersDir: 'subscribers',
   },
 };

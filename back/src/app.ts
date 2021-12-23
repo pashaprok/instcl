@@ -1,8 +1,10 @@
+import http from 'http';
 import express, { Application } from 'express';
-import { catchErrors } from './middlewares/catchErrors';
 
-const app: Application = express();
-app.use(express.json());
-app.use(catchErrors);
+const expressApp: Application = express();
+const app = http.createServer(expressApp);
 
-export default app;
+export default {
+  http: app,
+  express: expressApp
+}
