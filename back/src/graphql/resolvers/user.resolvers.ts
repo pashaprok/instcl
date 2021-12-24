@@ -1,13 +1,15 @@
-import { createUser, getAll, getByEmail, getById } from '../../repositories/user.repository';
+import { createUser, deleteUser, getAll, getByEmail, getById, updateUser } from '../../repositories/user.repository';
 import { User } from '../../entities/user.entity';
 import { ApolloError } from 'apollo-server';
 import bcrypt from 'bcrypt';
 import { authConfig } from '../../config/auth';
+import { IResponseMsg } from '../../types/common.types';
+import { UserID } from '../../types/user.types';
 
 export default {
   Query: {
     async getUserById (parent, args, context, info) {
-      const user: User = await getById(args.id);
+      const user: User = await getById(+args.id);
       if(!user) {
         throw new ApolloError('User is not found', '404');
       }
@@ -33,7 +35,24 @@ export default {
       }
     },
     async updateUser(parent, args, context, info) {
-      // update user
+      const userId: UserID = +args.userId;
+      const updateInfo: Partial<User> = args.userUpdateInfo;
+      const userFound: User = await getById(userId);
+      if(!userFound) throw new ApolloError('This user does not exist!', '404');
+
+      updateInfo.updatedAt = new Date();
+      return await updateUser(userId, updateInfo);
+    },
+    async deleteUser(parent, args, context, info): Promise<IResponseMsg> {
+      try {
+        await deleteUser(+args.userId);
+        return { message: 'success' }
+      } catch (e) {
+        return {
+          message: 'fail',
+          info: e
+        }
+      }
     }
   }
 }

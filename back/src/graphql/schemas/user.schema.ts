@@ -8,7 +8,8 @@ export default gql `
 
     type Mutation {
         registerUser(newUser: UserRegisterInput!): User!
-        updateUser(userUpdate: UserRegisterInput!): User!
+        updateUser(userId: ID!, userUpdateInfo: UserUpdateInput): User!
+        deleteUser(userId: ID!): ResponseMsg!
     }
     
     input UserRegisterInput {
@@ -18,7 +19,6 @@ export default gql `
     }
     
     input UserUpdateInput {
-        id: ID!
         email: String
         name: String
     }
@@ -30,5 +30,9 @@ export default gql `
         password: String!
         createdAt: String
         updatedAt: String
+    }
+    
+    type ResponseMsg {
+     message: String!
     }
  `;
