@@ -6,5 +6,5 @@ const app = http.createServer(expressApp);
 
 export default {
   http: app,
-  express: expressApp
-}
+  express: expressApp,
+};

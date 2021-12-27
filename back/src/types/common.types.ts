@@ -1,6 +1,6 @@
 type ResponseMsgText = 'success' | 'fail';
 
 export interface IResponseMsg {
-  message: ResponseMsgText,
-  info?: any
+  message: ResponseMsgText;
+  info?: any;
 }

@@ -6,6 +6,7 @@ import { ormConfig } from './config/orm';
 import apolloServer from './graphql/apollo.server';
 import app from './app';
 import { catchErrors } from './middlewares/catchErrors';
+import { appWorkLogger } from './utils/logger';
 
 const { express } = app;
 const hostname = 'localhost'; // dev
@@ -16,20 +17,20 @@ const start = async () => {
     apolloServer.applyMiddleware({
       app: express,
       path: '/api/graphql',
-    })
+    });
 
     express.use(catchErrors);
 
     express.listen(appConfig.port, async () => {
-      console.log(
+      appWorkLogger.info(
         `Server started and running on http://${hostname}:${appConfig.port}${apolloServer.graphqlPath}`,
       );
       await createConnection(ormConfig);
-      console.log(`DB Connected!`);
+      appWorkLogger.info('DB Connected!');
     });
   } catch (e) {
-    console.log(e);
+    appWorkLogger.info(e);
   }
-}
+};
 
 start();
