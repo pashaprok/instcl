@@ -1,4 +1,4 @@
-import { ApolloError } from 'apollo-server';
+import { ApolloError, UserInputError } from 'apollo-server';
 import bcrypt from 'bcrypt';
 import {
   createUser,
@@ -12,6 +12,8 @@ import { User } from '../../entities/user.entity';
 import { authConfig } from '../../config/auth';
 import { IResponseMsg } from '../../types/common.types';
 import { UserID } from '../../types/user.types';
+import { ValidationResponse } from '../../types/validation.types';
+import { userPartialValidate } from '../../utils/validation';
 
 export default {
   Query: {
@@ -33,6 +35,11 @@ export default {
       if (!name || !email || !password)
         throw new ApolloError('Some information is missing!', '400');
 
+      const userValidation: ValidationResponse = await userPartialValidate(args.newUser);
+      if (userValidation.status === 'fail') {
+        throw new UserInputError(userValidation.msg, userValidation)
+      }
+
       const passwordHash = await bcrypt.hash(
         password,
         authConfig.bcrypt.saltRounds,
@@ -48,8 +55,22 @@ export default {
     async updateUser(parent, args, context, info) {
       const userId: UserID = +args.userId;
       const updateInfo: Partial<User> = args.userUpdateInfo;
+      const userValidation: ValidationResponse = await userPartialValidate(updateInfo);
+      if (userValidation.status === 'fail') {
+        throw new UserInputError(userValidation.msg, userValidation)
+      }
+
       const userFound: User = await getById(userId);
-      if (!userFound) throw new ApolloError('This user does not exist!', '404');
+      if (!userFound) {
+        throw new ApolloError('This user does not exist!', '404');
+      }
+
+      const emailDuplicate: User = await getByEmail(updateInfo.email);
+      if (emailDuplicate) {
+        if(emailDuplicate.email === updateInfo.email && emailDuplicate.id !== userId) {
+          throw new ApolloError('This email is already taken!', '403')
+        }
+      }
 
       updateInfo.updatedAt = new Date();
       return updateUser(userId, updateInfo);

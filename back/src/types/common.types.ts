@@ -1,4 +1,4 @@
-type ResponseMsgText = 'success' | 'fail';
+export type ResponseMsgText = 'success' | 'fail';
 
 export interface IResponseMsg {
   message: ResponseMsgText;
