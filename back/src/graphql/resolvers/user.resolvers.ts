@@ -14,6 +14,8 @@ import { IResponseMsg } from '../../types/common.types';
 import { UserID } from '../../types/user.types';
 import { ValidationResponse } from '../../types/validation.types';
 import { userPartialValidate } from '../../utils/validation';
+import { authJWT } from '../../utils/jwt';
+import { usersActivitiesLogger } from '../../utils/logger';
 
 export default {
   Query: {
@@ -33,7 +35,7 @@ export default {
     async registerUser(parent, args, context, info) {
       const { name, email, password } = args.newUser;
       if (!name || !email || !password)
-        throw new ApolloError('Some information is missing!', '400');
+        throw new UserInputError('Some information is missing!');
 
       const userValidation: ValidationResponse = await userPartialValidate(args.newUser);
       if (userValidation.status === 'fail') {
@@ -49,7 +51,45 @@ export default {
         throw new ApolloError('Email is already taken!', '401');
       } else {
         args.newUser.password = passwordHash;
-        return createUser(args.newUser);
+        const user: User = await createUser(args.newUser);
+        const { accessToken, refreshToken } = await authJWT(user);
+
+        usersActivitiesLogger.info(
+          `User ${user.name} - ${user.email} is registered!(id: ${user.id})`,
+        );
+
+        return {
+          accessToken,
+          refreshToken,
+          user,
+        }
+      }
+    },
+    async loginUser(parent, args, context, info) {
+      const { email, password } = args.loginInfo;
+      if (!email || !password)
+        throw new UserInputError('Some information is missing!');
+
+      const userValidation: ValidationResponse = await userPartialValidate(args.loginInfo);
+      if (userValidation.status === 'fail') {
+        throw new UserInputError(userValidation.msg, userValidation)
+      }
+
+      const userFound: User = await getByEmail(email);
+      if(!userFound || !(await bcrypt.compare(password, userFound.password))) {
+        throw new UserInputError('Incorrect login or password!');
+      } else {
+        const { accessToken, refreshToken } = await authJWT(userFound);
+
+        usersActivitiesLogger.info(
+          `User ${userFound.name} - ${userFound.email} is logged in!(id: ${userFound.id})`,
+        );
+
+        return {
+          accessToken,
+          refreshToken,
+          user: userFound,
+        }
       }
     },
     async updateUser(parent, args, context, info) {

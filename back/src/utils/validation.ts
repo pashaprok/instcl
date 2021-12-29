@@ -3,7 +3,6 @@ import { plainToClass } from 'class-transformer';
 import { ValidatorOptions } from 'class-validator/types/validation/ValidatorOptions';
 import { User } from '../entities/user.entity';
 import { ValidationErrorI, ValidationResponse } from '../types/validation.types';
-import { UserInputError } from 'apollo-server';
 
 class Validation {
   target: any;
