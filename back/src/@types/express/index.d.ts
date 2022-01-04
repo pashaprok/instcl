@@ -4,4 +4,8 @@ declare namespace Express {
   export interface User {
     id: UserID;
   }
+
+  export interface Request {
+    user: User;
+  }
 }

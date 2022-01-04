@@ -28,7 +28,7 @@ export async function checkPostRights(postId: PostID, userId: UserID) {
   const postFound: Post = await checkPostExist(postId);
   const userPosts: Post[] = await getUserPosts(userId);
   const check: boolean = checkBelongs(userPosts, postFound.id);
-  if(!check) {
+  if (!check) {
     throw new ApolloError('Post can be updated only by author!', '403')
   }
 }

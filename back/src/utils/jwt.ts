@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken';
 import * as crypto from 'crypto';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { User } from '../entities/user.entity';
 import { authConfig } from '../config/auth';
 import { mins, weeks } from '../constants/nums';
 import { UserID } from '../types/user.types';
 import { getById } from '../repositories/user.repository';
-import { ApolloError } from 'apollo-server';
+import { ApolloError, AuthenticationError } from 'apollo-server';
 
 export class JWTLogic {
   readonly accessSecret = authConfig.accessToken.secret;
@@ -112,10 +112,6 @@ export class JWTLogic {
       refreshToken = req.cookies.refresh;
     }
 
-    if (!accessToken || !refreshToken) {
-      throw new ApolloError('You are not logged in!', '401');
-    }
-
     return {
       access: accessToken,
       refresh: refreshToken,
@@ -180,29 +176,21 @@ async function verifyAndUpdateJWT(
   const { newAccessToken, user } = await JWTLogic.verifyAccess(access, refresh);
   const newRefreshToken = new JWTLogic(user).createRefreshToken(newAccessToken);
   JWTLogic.setCookieJWT(res, newAccessToken, newRefreshToken);
+  req.user = user;
   res.locals.user = user;
 }
 
-export async function verifyUser(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+export async function defineUser(req: Request, res: Response) {
   const { access, refresh } = JWTLogic.extractJWT(req);
-  await verifyAndUpdateJWT(req, res, access, refresh);
-  return next();
+  if (access && refresh) {
+    await verifyAndUpdateJWT(req, res, access, refresh);
+  }
 }
 
-export async function isLoggedIn(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  const { access, refresh } = JWTLogic.extractJWTFromCookie(req);
-  if (!access || !refresh) {
-    return next();
+export function defineUserIdFromRequest(context): UserID {
+  if (!context.req.user) {
+    throw new AuthenticationError('This action is available only to authorized users!');
   }
 
-  await verifyAndUpdateJWT(req, res, access, refresh);
-  return next();
+  return context.req.user.id;
 }

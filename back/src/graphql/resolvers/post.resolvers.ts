@@ -14,6 +14,7 @@ import { getById } from '../../repositories/user.repository';
 import { ValidationResponse } from '../../types/validation.types';
 import { postPartialValidate } from '../../utils/validation';
 import { checkPostRights } from '../../utils/checkRights';
+import { defineUserIdFromRequest } from '../../utils/jwt';
 
 export default {
   Query: {
@@ -36,7 +37,7 @@ export default {
         throw new UserInputError(postValidation.msg, postValidation);
       }
 
-      const authorId: UserID = +args.userId;
+      const authorId: UserID = defineUserIdFromRequest(context);
       const authorFound: User = await getById(authorId);
       if(!authorFound) NotFound('User');
 
@@ -46,17 +47,19 @@ export default {
       return await createPost(newPost);
     },
     async updatePost(parent, args, context, info) {
+      const authorId: UserID = defineUserIdFromRequest(context);
       const postValidation: ValidationResponse = await postPartialValidate(args.postUpdateInfo);
       if (postValidation.status === 'fail') {
         throw new UserInputError(postValidation.msg, postValidation);
       }
 
-      await checkPostRights(+args.postId, +args.userId);
+      await checkPostRights(+args.postId, authorId);
       return await updatePost(+args.postId, args.postUpdateInfo)
     },
     async deletePost(parent, args, context, info) {
       try {
-        await checkPostRights(+args.postId, +args.userId);
+        const authorId: UserID = defineUserIdFromRequest(context);
+        await checkPostRights(+args.postId, authorId);
         await deletePost(+args.postId);
         return { message: 'success' };
       } catch (e) {
