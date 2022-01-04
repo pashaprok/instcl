@@ -3,6 +3,7 @@ import { plainToClass } from 'class-transformer';
 import { ValidatorOptions } from 'class-validator/types/validation/ValidatorOptions';
 import { User } from '../entities/user.entity';
 import { ValidationErrorI, ValidationResponse } from '../types/validation.types';
+import { Post } from '../entities/post.entity';
 
 class Validation {
   target: any;
@@ -61,4 +62,12 @@ export function userPartialValidate(userInput: Partial<User>) {
 
 export function userFullValidate(userInput: Partial<User>) {
   return new Validation(userInput, User).validate();
+}
+
+export function postPartialValidate(postInput: Partial<Post>) {
+  return new Validation(postInput, Post, true).validate();
+}
+
+export function postFullValidate(postInput: Partial<Post>) {
+  return new Validation(postInput, Post).validate();
 }

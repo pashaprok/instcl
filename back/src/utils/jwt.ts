@@ -163,11 +163,11 @@ export class JWTLogic {
   }
 }
 
-export async function authJWT(user: User) {
+export async function authJWT(res: Response, user: User) {
   const jwtLogic = new JWTLogic(user);
   const accessToken = jwtLogic.createAccessToken();
   const refreshToken = jwtLogic.createRefreshToken(accessToken);
-  // JWTLogic.setCookieJWT(res, accessToken, refreshToken); // res in args
+  JWTLogic.setCookieJWT(res, accessToken, refreshToken);
   return { accessToken, refreshToken };
 }
 

@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm';
+import { IsDate, IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { strongPasswordRegExp } from '../constants/regex';
+import { Post } from './post.entity';
 
 @Entity()
 export class User {
@@ -22,13 +23,19 @@ export class User {
   })
   password: string;
 
+  @OneToMany(() => Post, post => post.author)
+  @JoinColumn({name: 'posts', referencedColumnName: 'id'})
+  posts: Post[];
+
   @Column()
   @IsNotEmpty({ message: 'Can not be empty!' })
   name: string;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @IsDate()
   createdAt: Date;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
+  @IsDate()
   updatedAt: Date;
 }

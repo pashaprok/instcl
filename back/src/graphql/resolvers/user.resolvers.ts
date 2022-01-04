@@ -16,14 +16,13 @@ import { ValidationResponse } from '../../types/validation.types';
 import { userPartialValidate } from '../../utils/validation';
 import { authJWT } from '../../utils/jwt';
 import { usersActivitiesLogger } from '../../utils/logger';
+import { NotFound } from '../../utils/errors';
 
 export default {
   Query: {
     async getUserById(parent, args, context, info) {
       const user: User = await getById(+args.id);
-      if (!user) {
-        throw new ApolloError('User is not found', '404');
-      }
+      if (!user) NotFound('User');
 
       return user;
     },
@@ -52,7 +51,7 @@ export default {
       } else {
         args.newUser.password = passwordHash;
         const user: User = await createUser(args.newUser);
-        const { accessToken, refreshToken } = await authJWT(user);
+        const { accessToken, refreshToken } = await authJWT(context.res, user);
 
         usersActivitiesLogger.info(
           `User ${user.name} - ${user.email} is registered!(id: ${user.id})`,
@@ -79,7 +78,7 @@ export default {
       if(!userFound || !(await bcrypt.compare(password, userFound.password))) {
         throw new UserInputError('Incorrect login or password!');
       } else {
-        const { accessToken, refreshToken } = await authJWT(userFound);
+        const { accessToken, refreshToken } = await authJWT(context.res, userFound);
 
         usersActivitiesLogger.info(
           `User ${userFound.name} - ${userFound.email} is logged in!(id: ${userFound.id})`,
