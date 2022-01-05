@@ -2,7 +2,10 @@ import { validate, ValidationError } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { ValidatorOptions } from 'class-validator/types/validation/ValidatorOptions';
 import { User } from '../entities/user.entity';
-import { ValidationErrorI, ValidationResponse } from '../types/validation.types';
+import {
+  ValidationErrorI,
+  ValidationResponse,
+} from '../types/validation.types';
 import { Post } from '../entities/post.entity';
 
 class Validation {
@@ -43,16 +46,18 @@ class Validation {
 
   private static validationSuccess(): ValidationResponse {
     return {
-      status: 'success'
-    }
+      status: 'success',
+    };
   }
 
-  private static validationFail(errors: ValidationErrorI[]): ValidationResponse {
+  private static validationFail(
+    errors: ValidationErrorI[],
+  ): ValidationResponse {
     return {
       status: 'fail',
       msg: 'Incorrect input data',
       errors,
-    }
+    };
   }
 }
 

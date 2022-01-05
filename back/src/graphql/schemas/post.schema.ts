@@ -4,6 +4,7 @@ export default gql`
   extend type Query {
     getPostById(id: ID!): Post!
     getAllUserPosts(userId: ID!): [Post]
+    getAllMyPosts: [Post]
     getAllPosts: [Post]
   }
 

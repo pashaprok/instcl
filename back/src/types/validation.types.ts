@@ -6,7 +6,7 @@ export interface ValidationErrorI {
 }
 
 export interface ValidationResponse {
-  status: ResponseMsgText,
-  msg?: string,
-  errors?: ValidationErrorI[]
+  status: ResponseMsgText;
+  msg?: string;
+  errors?: ValidationErrorI[];
 }

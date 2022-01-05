@@ -1,11 +1,11 @@
-import { DeleteResult, getRepository, Repository } from 'typeorm'
-import { Post } from '../entities/post.entity'
+import { DeleteResult, getRepository, Repository } from 'typeorm';
+import { Post } from '../entities/post.entity';
 import { UserID } from '../types/user.types';
 
 export const getPosts = async (): Promise<Array<Post>> => {
   const postRepository: Repository<Post> = getRepository(Post);
   return postRepository.find({
-    relations: ['author']
+    relations: ['author'],
   });
 };
 
@@ -18,13 +18,13 @@ export const createPost = async (payload: Partial<Post>): Promise<Post> => {
   });
 };
 
-export const getPost = async (id: number): Promise< Post > => {
+export const getPost = async (id: number): Promise<Post> => {
   const postRepository: Repository<Post> = getRepository(Post);
-  return await postRepository.findOneOrFail({
+  return postRepository.findOneOrFail({
     where: {
-      id
+      id,
     },
-    relations: ['author']
+    relations: ['author'],
   });
 };
 
@@ -32,18 +32,21 @@ export const getUserPosts = async (id: UserID): Promise<Array<Post>> => {
   const postRepository: Repository<Post> = getRepository(Post);
   return postRepository.find({
     where: {
-      author: id
-    }
+      author: id,
+    },
   });
 };
 
-export const updatePost = async(id: number, upd: Partial<Post>): Promise<Post> => {
+export const updatePost = async (
+  id: number,
+  upd: Partial<Post>,
+): Promise<Post> => {
   const postRepository: Repository<Post> = getRepository(Post);
   await postRepository.update(id, upd);
   return getPost(id);
-}
+};
 
 export const deletePost = async (id: number): Promise<DeleteResult> => {
   const postRepository: Repository<Post> = getRepository(Post);
-  return await postRepository.delete(id);
+  return postRepository.delete(id);
 };

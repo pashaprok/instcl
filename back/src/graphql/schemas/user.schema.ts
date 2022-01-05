@@ -8,11 +8,23 @@ export default gql`
 
   type Mutation {
     loginUser(loginInfo: LoginInput!): AuthUser!
-    registerUser(newUser: UserRegisterInput!): AuthUser!
-    updateUser(userId: ID!, userUpdateInfo: UserUpdateInput): User!
+    registerUser(newUser: UserRegisterInput!, avatar: Upload): AuthUser!
+    updateUser(
+      userId: ID!
+      userUpdateInfo: UserUpdateInput
+      avatar: Upload
+    ): User!
     deleteUser(userId: ID!): ResponseMsg!
   }
-  
+
+  scalar Upload
+
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
+
   input LoginInput {
     email: String!
     password: String!
@@ -41,7 +53,7 @@ export default gql`
   type ResponseMsg {
     message: String!
   }
-  
+
   type AuthUser {
     accessToken: String!
     refreshToken: String!

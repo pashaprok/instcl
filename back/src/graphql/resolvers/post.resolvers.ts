@@ -1,5 +1,7 @@
+import { UserInputError } from 'apollo-server';
 import {
-  createPost, deletePost,
+  createPost,
+  deletePost,
   getPost,
   getPosts,
   getUserPosts,
@@ -8,7 +10,6 @@ import {
 import { Post } from '../../entities/post.entity';
 import { NotFound } from '../../utils/errors';
 import { UserID } from '../../types/user.types';
-import { UserInputError } from 'apollo-server';
 import { User } from '../../entities/user.entity';
 import { getById } from '../../repositories/user.repository';
 import { ValidationResponse } from '../../types/validation.types';
@@ -29,32 +30,40 @@ export default {
     async getAllUserPosts(parent, args, context, info) {
       return getUserPosts(+args.userId);
     },
+    async getAllMyPosts(parent, args, context, info) {
+      const authorId: UserID = defineUserIdFromRequest(context);
+      return getUserPosts(authorId);
+    },
   },
   Mutation: {
     async createPost(parent, args, context, info) {
-      const postValidation: ValidationResponse = await postPartialValidate(args.newPost);
+      const postValidation: ValidationResponse = await postPartialValidate(
+        args.newPost,
+      );
       if (postValidation.status === 'fail') {
         throw new UserInputError(postValidation.msg, postValidation);
       }
 
       const authorId: UserID = defineUserIdFromRequest(context);
       const authorFound: User = await getById(authorId);
-      if(!authorFound) NotFound('User');
+      if (!authorFound) NotFound('User');
 
-      const newPost = args.newPost;
+      const { newPost } = args;
       newPost.author = authorId;
 
-      return await createPost(newPost);
+      return createPost(newPost);
     },
     async updatePost(parent, args, context, info) {
       const authorId: UserID = defineUserIdFromRequest(context);
-      const postValidation: ValidationResponse = await postPartialValidate(args.postUpdateInfo);
+      const postValidation: ValidationResponse = await postPartialValidate(
+        args.postUpdateInfo,
+      );
       if (postValidation.status === 'fail') {
         throw new UserInputError(postValidation.msg, postValidation);
       }
 
       await checkPostRights(+args.postId, authorId);
-      return await updatePost(+args.postId, args.postUpdateInfo)
+      return updatePost(+args.postId, args.postUpdateInfo);
     },
     async deletePost(parent, args, context, info) {
       try {
@@ -68,6 +77,6 @@ export default {
           info: e,
         };
       }
-    }
-  }
-}
+    },
+  },
+};

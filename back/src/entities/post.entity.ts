@@ -1,10 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm'
 import {
-  MinLength,
-  MaxLength,
-  IsDate, IsNotEmpty,
-} from 'class-validator';
-import { User } from './user.entity'
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { MinLength, MaxLength, IsDate, IsNotEmpty } from 'class-validator';
+import { User } from './user.entity';
 import { UserID } from '../types/user.types';
 
 @Entity()
@@ -37,7 +39,7 @@ export class Post {
   @IsDate()
   updatedAt: Date;
 
-  @ManyToOne(() => User, user => user.posts)
+  @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: 'userID', referencedColumnName: 'id' })
   author: UserID;
 }

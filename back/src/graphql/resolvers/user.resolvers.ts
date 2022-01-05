@@ -1,5 +1,6 @@
 import { ApolloError, UserInputError } from 'apollo-server';
 import bcrypt from 'bcrypt';
+import { GraphQLUpload, graphqlUploadExpress } from 'graphql-upload';
 import {
   createUser,
   deleteUser,
@@ -19,6 +20,7 @@ import { usersActivitiesLogger } from '../../utils/logger';
 import { NotFound } from '../../utils/errors';
 
 export default {
+  Upload: GraphQLUpload,
   Query: {
     async getUserById(parent, args, context, info) {
       const user: User = await getById(+args.id);
@@ -36,9 +38,11 @@ export default {
       if (!name || !email || !password)
         throw new UserInputError('Some information is missing!');
 
-      const userValidation: ValidationResponse = await userPartialValidate(args.newUser);
+      const userValidation: ValidationResponse = await userPartialValidate(
+        args.newUser,
+      );
       if (userValidation.status === 'fail') {
-        throw new UserInputError(userValidation.msg, userValidation)
+        throw new UserInputError(userValidation.msg, userValidation);
       }
 
       const passwordHash = await bcrypt.hash(
@@ -61,7 +65,7 @@ export default {
           accessToken,
           refreshToken,
           user,
-        }
+        };
       }
     },
     async loginUser(parent, args, context, info) {
@@ -69,16 +73,21 @@ export default {
       if (!email || !password)
         throw new UserInputError('Some information is missing!');
 
-      const userValidation: ValidationResponse = await userPartialValidate(args.loginInfo);
+      const userValidation: ValidationResponse = await userPartialValidate(
+        args.loginInfo,
+      );
       if (userValidation.status === 'fail') {
-        throw new UserInputError(userValidation.msg, userValidation)
+        throw new UserInputError(userValidation.msg, userValidation);
       }
 
       const userFound: User = await getByEmail(email);
-      if(!userFound || !(await bcrypt.compare(password, userFound.password))) {
+      if (!userFound || !(await bcrypt.compare(password, userFound.password))) {
         throw new UserInputError('Incorrect login or password!');
       } else {
-        const { accessToken, refreshToken } = await authJWT(context.res, userFound);
+        const { accessToken, refreshToken } = await authJWT(
+          context.res,
+          userFound,
+        );
 
         usersActivitiesLogger.info(
           `User ${userFound.name} - ${userFound.email} is logged in!(id: ${userFound.id})`,
@@ -88,15 +97,17 @@ export default {
           accessToken,
           refreshToken,
           user: userFound,
-        }
+        };
       }
     },
     async updateUser(parent, args, context, info) {
       const userId: UserID = +args.userId;
       const updateInfo: Partial<User> = args.userUpdateInfo;
-      const userValidation: ValidationResponse = await userPartialValidate(updateInfo);
+      const userValidation: ValidationResponse = await userPartialValidate(
+        updateInfo,
+      );
       if (userValidation.status === 'fail') {
-        throw new UserInputError(userValidation.msg, userValidation)
+        throw new UserInputError(userValidation.msg, userValidation);
       }
 
       const userFound: User = await getById(userId);
@@ -106,8 +117,11 @@ export default {
 
       const emailDuplicate: User = await getByEmail(updateInfo.email);
       if (emailDuplicate) {
-        if(emailDuplicate.email === updateInfo.email && emailDuplicate.id !== userId) {
-          throw new ApolloError('This email is already taken!', '403')
+        if (
+          emailDuplicate.email === updateInfo.email &&
+          emailDuplicate.id !== userId
+        ) {
+          throw new ApolloError('This email is already taken!', '403');
         }
       }
 

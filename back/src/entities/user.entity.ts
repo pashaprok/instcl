@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
 import { IsDate, IsEmail, IsNotEmpty, Length, Matches } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { strongPasswordRegExp } from '../constants/regex';
@@ -23,8 +29,8 @@ export class User {
   })
   password: string;
 
-  @OneToMany(() => Post, post => post.author)
-  @JoinColumn({name: 'posts', referencedColumnName: 'id'})
+  @OneToMany(() => Post, (post) => post.author)
+  @JoinColumn({ name: 'posts', referencedColumnName: 'id' })
   posts: Post[];
 
   @Column()

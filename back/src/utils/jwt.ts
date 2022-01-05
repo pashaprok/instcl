@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken';
 import * as crypto from 'crypto';
 import { Request, Response } from 'express';
+import { ApolloError, AuthenticationError } from 'apollo-server';
 import { User } from '../entities/user.entity';
 import { authConfig } from '../config/auth';
 import { mins, weeks } from '../constants/nums';
 import { UserID } from '../types/user.types';
 import { getById } from '../repositories/user.repository';
-import { ApolloError, AuthenticationError } from 'apollo-server';
 
 export class JWTLogic {
   readonly accessSecret = authConfig.accessToken.secret;
@@ -189,7 +189,9 @@ export async function defineUser(req: Request, res: Response) {
 
 export function defineUserIdFromRequest(context): UserID {
   if (!context.req.user) {
-    throw new AuthenticationError('This action is available only to authorized users!');
+    throw new AuthenticationError(
+      'This action is available only to authorized users!',
+    );
   }
 
   return context.req.user.id;
