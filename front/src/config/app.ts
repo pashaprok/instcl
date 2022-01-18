@@ -1,3 +1,5 @@
+import env from 'react-dotenv';
+
 export const appConfig = {
-  backAPILink: process.env.backAPILink || ''
-}
+	backAPILink: env.backAPILink || '',
+};
