@@ -15,13 +15,20 @@ import { IResponseMsg } from '../../types/common.types';
 import { UserID } from '../../types/user.types';
 import { ValidationResponse } from '../../types/validation.types';
 import { userPartialValidate } from '../../utils/validation';
-import { authJWT } from '../../utils/jwt';
+import { authJWT, defineUserIdFromRequest } from '../../utils/jwt';
 import { usersActivitiesLogger } from '../../utils/logger';
 import { NotFound } from '../../utils/errors';
 
 export default {
   Upload: GraphQLUpload,
   Query: {
+    async getCurrentUser(parent, args, context, info) {
+      const id: UserID = defineUserIdFromRequest(context);
+      const user: User = await getById(id);
+      if (!user) NotFound('User');
+
+      return user;
+    },
     async getUserById(parent, args, context, info) {
       const user: User = await getById(+args.id);
       if (!user) NotFound('User');

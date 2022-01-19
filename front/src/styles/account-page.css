@@ -1,0 +1,56 @@
+.account-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.photo-section {
+    position: relative;
+    width: 40%;
+    height: auto;
+}
+
+.avatar {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.info-section {
+    width: 60%;
+    align-self: center;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: row;
+    font-size: 26px;
+    margin: 15px 0;
+}
+
+.info-name {
+    width: 220px;
+    padding-right: 15px;
+    font-weight: lighter;
+}
+
+.info-value {
+    font-weight: bold;
+}
+
+.account-logout {
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    padding: 15px 30px;
+    border: 1px solid #4BA0EC;
+    background-color: transparent;
+    color: #4BA0EC;
+    transition: all 0.2s ease-in-out;
+}
+
+.account-logout:hover {
+    background-color: #4BA0EC;
+    color: #fff;
+}

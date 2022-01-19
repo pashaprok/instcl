@@ -2,6 +2,7 @@ import { gql } from 'apollo-server';
 
 export default gql`
   type Query {
+    getCurrentUser: User!
     getUserById(id: ID!): User!
     getAllUsers: [User]
   }

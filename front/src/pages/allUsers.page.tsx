@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { HeadingOne } from '../elements/headingOne';
+import { HeadingOne } from '../elements/layout/titles';
 import { ALL_USERS } from '../graphql/schemas/allUsers.query';
 import { gqlResponse } from '../types/common.types';
 import { ShowContent } from '../elements/showQueryContent';

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { AuthInput } from './authInput';
-import { SubmitButton } from './submitButton';
-import { Validation } from '../utils/validation';
-import { REGISTER_QUERY } from '../graphql/schemas/register.query';
+import { SubmitButton } from '../buttons/submitButton';
+import { Validation } from '../../utils/validation';
+import { REGISTER_QUERY } from '../../graphql/schemas/register.query';
+import { setLSToken } from '../../utils/token.helpers';
+import { AuthFormPropsI } from '../../types/auth.types';
 
-export function RegisterForm() {
+export function RegisterForm(props: AuthFormPropsI) {
+	const { setRedirect } = props;
 	const [name, setName] = useState('');
 	const [nameValErr, setNameValErr] = useState('');
 
@@ -36,17 +39,15 @@ export function RegisterForm() {
 			nameValErr === ''
 		) {
 			const data = await register();
-			// console.log(data.data.registerUser.user);
-			localStorage.setItem(
-				'user',
-				JSON.stringify({
-					access: data.data.registerUser.accessToken,
-					refresh: data.data.registerUser.refreshToken,
-				}),
+			setLSToken(
+				data.data.registerUser.accessToken,
+				data.data.registerUser.refreshToken,
 			);
 			setName('');
 			setEmail('');
 			setPassword('');
+
+			setRedirect(true);
 		}
 	};
 
@@ -73,7 +74,10 @@ export function RegisterForm() {
 				errors={passwordValErr}
 				setErrors={setPasswordValErr}
 			/>
-			<SubmitButton cls='auth-button' />
+			<SubmitButton
+				cls='auth-button'
+				txt='Sign up'
+			/>
 		</form>
 	);
 }

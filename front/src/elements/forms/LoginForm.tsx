@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { LOGIN_QUERY } from '../graphql/schemas/login.query';
+import { LOGIN_QUERY } from '../../graphql/schemas/login.query';
 import { AuthInput } from './authInput';
-import { SubmitButton } from './submitButton';
-import { Validation } from '../utils/validation';
+import { SubmitButton } from '../buttons/submitButton';
+import { Validation } from '../../utils/validation';
+import { setLSToken } from '../../utils/token.helpers';
+import { AuthFormPropsI } from '../../types/auth.types';
 
-export function LoginForm() {
+export function LoginForm(props: AuthFormPropsI) {
+	const { setRedirect } = props;
 	const [email, setEmail] = useState('');
 	const [emailValErr, setEmailValErr] = useState('');
 	const [password, setPassword] = useState('');
@@ -27,17 +30,17 @@ export function LoginForm() {
 			emailValErr === '' &&
 			passwordValErr === ''
 		) {
-			const data = await login();
-			// console.log(data.data.loginUser.user);
-			localStorage.setItem(
-				'user',
-				JSON.stringify({
-					access: data.data.loginUser.accessToken,
-					refresh: data.data.loginUser.refreshToken,
-				}),
-			);
-			setEmail('');
-			setPassword('');
+			const res = await login();
+			if (res.data) {
+				setLSToken(
+					res.data.loginUser.accessToken,
+					res.data.loginUser.refreshToken,
+				);
+				setEmail('');
+				setPassword('');
+
+				setRedirect(true);
+			}
 		}
 	};
 
@@ -57,7 +60,10 @@ export function LoginForm() {
 				errors={passwordValErr}
 				setErrors={setPasswordValErr}
 			/>
-			<SubmitButton cls='auth-button' />
+			<SubmitButton
+				cls='auth-button'
+				txt='Sign in'
+			/>
 		</form>
 	);
 }
