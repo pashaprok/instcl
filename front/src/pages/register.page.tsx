@@ -19,10 +19,7 @@ const registerPage = (setRedirect: useStateFunctionBool) => (
 				<RegisterForm setRedirect={setRedirect} />
 				<div className='auth-question'>
 					already registered?&nbsp;
-					<Link
-						to='/'
-						className='blue-link'
-					>
+					<Link to='/' className='blue-link'>
 						sign in
 					</Link>
 				</div>

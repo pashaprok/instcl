@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	emailValidation,
 	nameValidation,
@@ -33,6 +33,7 @@ function onChangeInput(
 
 export function AuthInput(props: AuthInputProps) {
 	const { type, value, setValue, errors, setErrors } = props;
+	const [errTxt, setErrTxt] = useState('');
 	const placeholder = `Your ${type}`;
 
 	let cls = 'auth-input';
@@ -42,9 +43,12 @@ export function AuthInput(props: AuthInputProps) {
 		padding: '0',
 		marginTop: '5px',
 		overflow: 'hidden',
-		transition: 'all 0.2s ease-in-out'
-	}
+		transition: 'all 0.2s ease-in-out',
+	};
 	if (errors) {
+		setTimeout(() => {
+			setErrTxt(errors);
+		}, 0);
 		cls += ' input-error';
 		heightPopover.maxHeight = '100px';
 		heightPopover.marginTop = '-10px';
@@ -60,12 +64,9 @@ export function AuthInput(props: AuthInputProps) {
 				placeholder={placeholder}
 				onChange={e => onChangeInput(e, type, setValue, setErrors)}
 			/>
-			<div
-				style={heightPopover}
-				className={popoverCls}
-			>
+			<div style={heightPopover} className={popoverCls}>
 				<span>
-					<pre>{errors}</pre>
+					<pre>{errTxt}</pre>
 				</span>
 			</div>
 		</div>

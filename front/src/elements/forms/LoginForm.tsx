@@ -3,9 +3,9 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_QUERY } from '../../graphql/schemas/login.query';
 import { AuthInput } from './authInput';
 import { SubmitButton } from '../buttons/submitButton';
-import { Validation } from '../../utils/validation';
-import { setLSToken } from '../../utils/token.helpers';
 import { AuthFormPropsI } from '../../types/auth.types';
+import { FailAlert } from '../layout/alerts';
+import { handleAuth } from '../../utils/handleAuth';
 
 export function LoginForm(props: AuthFormPropsI) {
 	const { setRedirect } = props;
@@ -13,7 +13,7 @@ export function LoginForm(props: AuthFormPropsI) {
 	const [emailValErr, setEmailValErr] = useState('');
 	const [password, setPassword] = useState('');
 	const [passwordValErr, setPasswordValErr] = useState('');
-	const [login] = useMutation(LOGIN_QUERY, {
+	const [login, { error }] = useMutation(LOGIN_QUERY, {
 		variables: {
 			loginInfo: {
 				email,
@@ -23,47 +23,36 @@ export function LoginForm(props: AuthFormPropsI) {
 	});
 
 	const handleLogin = async (e: React.ChangeEvent<any>) => {
-		e.preventDefault();
-		if (
-			!Validation.isNotEmpty(email) &&
-			!Validation.isNotEmpty(password) &&
-			emailValErr === '' &&
-			passwordValErr === ''
-		) {
-			const res = await login();
-			if (res.data) {
-				setLSToken(
-					res.data.loginUser.accessToken,
-					res.data.loginUser.refreshToken,
-				);
-				setEmail('');
-				setPassword('');
-
-				setRedirect(true);
-			}
-		}
+		await handleAuth(
+			e,
+			[email, password],
+			[emailValErr, passwordValErr],
+			login,
+			[setEmail, setPassword],
+			setRedirect,
+		);
 	};
 
 	return (
-		<form onSubmit={handleLogin} className='auth-form'>
-			<AuthInput
-				type='email'
-				value={email}
-				setValue={setEmail}
-				errors={emailValErr}
-				setErrors={setEmailValErr}
-			/>
-			<AuthInput
-				type='password'
-				value={password}
-				setValue={setPassword}
-				errors={passwordValErr}
-				setErrors={setPasswordValErr}
-			/>
-			<SubmitButton
-				cls='auth-button'
-				txt='Sign in'
-			/>
-		</form>
+		<>
+			<form onSubmit={handleLogin} className='auth-form'>
+				<AuthInput
+					type='email'
+					value={email}
+					setValue={setEmail}
+					errors={emailValErr}
+					setErrors={setEmailValErr}
+				/>
+				<AuthInput
+					type='password'
+					value={password}
+					setValue={setPassword}
+					errors={passwordValErr}
+					setErrors={setPasswordValErr}
+				/>
+				<SubmitButton cls='auth-button' txt='Sign in' />
+			</form>
+			{error ? <FailAlert txt={error.message} /> : <></>}
+		</>
 	);
 }

@@ -19,10 +19,7 @@ const loginPage = (setRedirect: useStateFunctionBool) => (
 				<LoginForm setRedirect={setRedirect} />
 				<div className='auth-question'>
 					don&apos;t have an account?&nbsp;
-					<Link
-						to='/register'
-						className='blue-link'
-					>
+					<Link to='/register' className='blue-link'>
 						sign up
 					</Link>
 				</div>
