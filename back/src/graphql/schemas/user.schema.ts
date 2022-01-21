@@ -10,6 +10,9 @@ export default gql`
   type Mutation {
     loginUser(loginInfo: LoginInput!): AuthUser!
     registerUser(newUser: UserRegisterInput!, avatar: Upload): AuthUser!
+    updateCurrentUser(
+      userUpdateInfo: UserUpdateInput
+    ): AuthUser!
     updateUser(
       userId: ID!
       userUpdateInfo: UserUpdateInput

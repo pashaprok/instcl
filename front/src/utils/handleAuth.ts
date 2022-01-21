@@ -4,8 +4,20 @@ import { Validation } from './validation';
 import { setLSToken } from './token.helpers';
 import { useStateFunction, useStateFunctionBool } from '../types/common.types';
 
+export function allEmpty(values: string[]) {
+	let countEmpty: number = 0;
+	values.forEach(v => {
+		if (Validation.isNotEmpty(v)) {
+			countEmpty += 1;
+		}
+	});
+
+	return countEmpty >= values.length;
+}
+
 function checkValidation(values: string[], errList: string[]) {
 	const checkArr: boolean[] = [];
+
 	values.forEach(v => {
 		if (Validation.isNotEmpty(v)) {
 			checkArr.push(false);
@@ -26,19 +38,23 @@ function checkValidation(values: string[], errList: string[]) {
 	return result === -1;
 }
 
-function resetValues(functions: useStateFunction[]) {
+export function resetValues(functions: useStateFunction[]) {
 	functions.forEach(f => f(''));
 }
 
-function setLSTokens(data: any) {
+export function setLSTokens(data: any) {
 	if (data.loginUser) {
 		setLSToken(data.loginUser.accessToken, data.loginUser.refreshToken);
 	}
 
 	if (data.registerUser) {
+		setLSToken(data.registerUser.accessToken, data.registerUser.refreshToken);
+	}
+
+	if (data.updateCurrentUser) {
 		setLSToken(
-			data.data.registerUser.accessToken,
-			data.data.registerUser.refreshToken,
+			data.updateCurrentUser.accessToken,
+			data.updateCurrentUser.refreshToken,
 		);
 	}
 }

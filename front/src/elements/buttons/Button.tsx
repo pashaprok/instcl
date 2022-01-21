@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { resetLSToken } from '../../utils/token.helpers';
 
 interface ButtonPropsI {
 	cls: string;
-	txt: string;
+	txt: string | ReactNode;
 }
 
 interface ButtonPropsFuncI extends ButtonPropsI {

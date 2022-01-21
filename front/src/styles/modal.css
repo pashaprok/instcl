@@ -1,0 +1,66 @@
+.modal {
+    left: 0;
+    top: 0;
+    z-index: 1;
+    position: fixed;
+    width: 100vw;
+    min-height: 100vh;
+    background-color: rgba(28, 39, 51, 0.9);
+}
+
+.modal-main {
+    color: #1C2733E5;
+    background-color: #fff;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    margin: 100px auto;
+    width: 70%;
+    max-width: 900px;
+    padding: 15px 30px;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    font-size: 22px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: #C12D2E;
+}
+
+.modal-title {
+    padding: 0 30px;
+}
+
+.modal-form .form-part {
+    padding: 0;
+}
+
+.modal-input {
+    width: 100%;
+    outline: none;
+    font-size: 18px;
+    padding: 15px 30px;
+    border: 2px solid #283340;
+    color: #283340;
+    transition: all 0.2s ease-in-out;
+}
+
+.modal-input:focus {
+    background-color: #283340;
+    color: #fff;
+}
+
+.input-error {
+    background-color: #283340;
+    color: #fff;
+    border-bottom: 2px solid #C12D2E;
+}
+
+.modal-input::placeholder {
+    color: #8A98A4;
+}

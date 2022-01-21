@@ -42,6 +42,7 @@ export function LoginForm(props: AuthFormPropsI) {
 					setValue={setEmail}
 					errors={emailValErr}
 					setErrors={setEmailValErr}
+					clsName='auth-input'
 				/>
 				<AuthInput
 					type='password'
@@ -49,6 +50,7 @@ export function LoginForm(props: AuthFormPropsI) {
 					setValue={setPassword}
 					errors={passwordValErr}
 					setErrors={setPasswordValErr}
+					clsName='auth-input'
 				/>
 				<SubmitButton cls='auth-button' txt='Sign in' />
 			</form>

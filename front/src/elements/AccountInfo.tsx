@@ -3,6 +3,7 @@ import { UserID } from '../types/auth.types';
 import '../styles/account-page.css';
 import { AccountInfoItem, AccountInfoItemDate } from './AccountInfoItem';
 import { LogoutButton } from './buttons/Button';
+import { UpdateProfile } from './updateProfile';
 
 interface UserInfoI {
 	__typename: string;
@@ -38,7 +39,8 @@ export function AccountInfo(props: AccountInfoPropsI) {
 					name='Last profile update'
 					value={user.updatedAt}
 				/>
-				<LogoutButton cls='account-logout' txt='Logout' />
+				<LogoutButton cls='blue-btn' txt='Logout' />
+				<UpdateProfile />
 			</div>
 		</div>
 	);

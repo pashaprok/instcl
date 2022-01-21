@@ -39,18 +39,18 @@
     font-weight: bold;
 }
 
-.account-logout {
+.blue-btn {
     cursor: pointer;
     outline: none;
     font-size: 18px;
     padding: 15px 30px;
-    border: 1px solid #4BA0EC;
+    border: 2px solid #4BA0EC;
     background-color: transparent;
     color: #4BA0EC;
     transition: all 0.2s ease-in-out;
 }
 
-.account-logout:hover {
+.blue-btn:hover {
     background-color: #4BA0EC;
     color: #fff;
 }

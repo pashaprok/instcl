@@ -107,8 +107,8 @@ export default {
         };
       }
     },
-    async updateUser(parent, args, context, info) {
-      const userId: UserID = +args.userId;
+    async updateCurrentUser(parent, args, context, info) {
+      const userId: UserID = defineUserIdFromRequest(context);
       const updateInfo: Partial<User> = args.userUpdateInfo;
       const userValidation: ValidationResponse = await userPartialValidate(
         updateInfo,
@@ -133,7 +133,50 @@ export default {
       }
 
       updateInfo.updatedAt = new Date();
-      return updateUser(userId, updateInfo);
+      const updatedUser: User = await updateUser(userId, updateInfo);
+
+      const { accessToken, refreshToken } = await authJWT(
+        context.res,
+        updatedUser,
+      );
+
+      usersActivitiesLogger.info(
+        `User ${updatedUser.name} - ${updatedUser.email} is updated!(id: ${updatedUser.id})`,
+      );
+
+      return {
+        accessToken,
+        refreshToken,
+        user: updatedUser,
+      };
+    },
+    async updateUser(parent, args, context, info) {
+      // const userId: UserID = +args.userId;
+      // const updateInfo: Partial<User> = args.userUpdateInfo;
+      // const userValidation: ValidationResponse = await userPartialValidate(
+      //   updateInfo,
+      // );
+      // if (userValidation.status === 'fail') {
+      //   throw new UserInputError(userValidation.msg, userValidation);
+      // }
+      //
+      // const userFound: User = await getById(userId);
+      // if (!userFound) {
+      //   throw new ApolloError('This user does not exist!', '404');
+      // }
+      //
+      // const emailDuplicate: User = await getByEmail(updateInfo.email);
+      // if (emailDuplicate) {
+      //   if (
+      //     emailDuplicate.email === updateInfo.email &&
+      //     emailDuplicate.id !== userId
+      //   ) {
+      //     throw new ApolloError('This email is already taken!', '403');
+      //   }
+      // }
+      //
+      // updateInfo.updatedAt = new Date();
+      // return updateUser(userId, updateInfo);
     },
     async deleteUser(parent, args, context, info): Promise<IResponseMsg> {
       try {

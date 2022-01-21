@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-	emailValidation,
-	nameValidation,
-	passwordValidation,
-} from '../../utils/validation';
+import { inputValidation } from '../../utils/validation';
 import { useStateFunction } from '../../types/common.types';
 
 interface AuthInputProps {
@@ -12,6 +8,8 @@ interface AuthInputProps {
 	setValue: useStateFunction;
 	errors: string;
 	setErrors: useStateFunction;
+	clsName: 'auth-input' | 'modal-input';
+	allowEmpty?: boolean;
 }
 
 function onChangeInput(
@@ -19,24 +17,28 @@ function onChangeInput(
 	validationTarget: string,
 	setValue: useStateFunction,
 	setErrors: useStateFunction,
+	allowEmpty?: boolean,
 ) {
-	if (validationTarget === 'email') {
-		emailValidation(event, setErrors);
-	} else if (validationTarget === 'password') {
-		passwordValidation(event, setErrors);
-	} else if (validationTarget === 'name') {
-		nameValidation(event, setErrors);
+	let empty = false;
+	if (allowEmpty) empty = allowEmpty;
+	if (
+		validationTarget === 'name' ||
+		validationTarget === 'email' ||
+		validationTarget === 'password'
+	) {
+		inputValidation(event, setErrors, empty, validationTarget);
 	}
 
 	setValue(event.target.value);
 }
 
 export function AuthInput(props: AuthInputProps) {
-	const { type, value, setValue, errors, setErrors } = props;
+	const { type, value, setValue, errors, setErrors, clsName, allowEmpty } =
+		props;
 	const [errTxt, setErrTxt] = useState('');
 	const placeholder = `Your ${type}`;
 
-	let cls = 'auth-input';
+	let cls = clsName;
 	const popoverCls = 'errors-popover';
 	const heightPopover = {
 		maxHeight: '0',
@@ -62,7 +64,7 @@ export function AuthInput(props: AuthInputProps) {
 				value={value}
 				className={cls}
 				placeholder={placeholder}
-				onChange={e => onChangeInput(e, type, setValue, setErrors)}
+				onChange={e => onChangeInput(e, type, setValue, setErrors, allowEmpty)}
 			/>
 			<div style={heightPopover} className={popoverCls}>
 				<span>

@@ -17,6 +17,6 @@ export function AccountInfoItem(props: AccountInfoItemPropsI) {
 
 export function AccountInfoItemDate(props: AccountInfoItemPropsI) {
 	const { name, value } = props;
-	const date = new Date(+value).toISOString();
+	const date = new Date(+value).toLocaleString();
 	return AccountInfoItem({ name, value: date });
 }
