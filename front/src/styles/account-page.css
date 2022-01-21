@@ -54,3 +54,7 @@
     background-color: #4BA0EC;
     color: #fff;
 }
+
+.account-info__btns > .blue-btn:first-child {
+    margin-right: 30px;
+}

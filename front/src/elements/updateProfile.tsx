@@ -11,6 +11,11 @@ export function UpdateProfile() {
 	};
 	return (
 		<>
+			<Button
+				cls='blue-btn'
+				txt={<><i className='fas fa-user-edit' /> Update Profile</>}
+				onClickF={toggleModal}
+			/>
 			<Modal
 				handleClose={toggleModal}
 				show={showModal}
@@ -18,7 +23,6 @@ export function UpdateProfile() {
 			>
 				<UpdateAccountForm setRedirect={setShowModal} />
 			</Modal>
-			<Button cls='blue-btn' txt='Update Profile' onClickF={toggleModal} />
 		</>
 	);
 }

@@ -30,6 +30,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "react/function-component-definition": "off",
+    "react/jsx-no-useless-fragment": "off",
     "react/jsx-filename-extension": [
       1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],

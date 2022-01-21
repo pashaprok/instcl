@@ -39,8 +39,13 @@ export function AccountInfo(props: AccountInfoPropsI) {
 					name='Last profile update'
 					value={user.updatedAt}
 				/>
-				<LogoutButton cls='blue-btn' txt='Logout' />
-				<UpdateProfile />
+				<div className='account-info__btns'>
+					<UpdateProfile />
+					<LogoutButton
+						cls='blue-btn'
+						txt={<><i className='fas fa-sign-out-alt' /> Logout</>}
+					/>
+				</div>
 			</div>
 		</div>
 	);
