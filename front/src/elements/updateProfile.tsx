@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Button } from './buttons/Button';
 import { Modal } from './layout/modal';
 import { UpdateAccountForm } from './forms/UpdateAccountForm';
+import { AccountInfoPropsI } from '../types/auth.types';
 
-export function UpdateProfile() {
+export function UpdateProfile(props: AccountInfoPropsI) {
+	const { user } = props;
 	const [showModal, setShowModal] = useState(false);
 	const toggleModal = async (e: React.ChangeEvent<any>) => {
 		e.preventDefault();
@@ -21,7 +23,7 @@ export function UpdateProfile() {
 				show={showModal}
 				title='Update your profile info'
 			>
-				<UpdateAccountForm setRedirect={setShowModal} />
+				<UpdateAccountForm user={user} setRedirect={setShowModal} />
 			</Modal>
 		</>
 	);

@@ -13,7 +13,7 @@ interface userUpdateInfoI {
 }
 
 export function UpdateAccountForm(props: AuthFormPropsI) {
-	const { setRedirect } = props;
+	const { setRedirect, user } = props;
 	const [name, setName] = useState('');
 	const [nameValErr, setNameValErr] = useState('');
 
@@ -50,30 +50,40 @@ export function UpdateAccountForm(props: AuthFormPropsI) {
 		}
 	};
 
+	if (user) {
+		return (
+			<>
+				<form onSubmit={handleUpdate} className='modal-form'>
+					<AuthInput
+						type='name'
+						value={name}
+						setValue={setName}
+						errors={nameValErr}
+						setErrors={setNameValErr}
+						clsName='modal-input'
+						allowEmpty
+						placeholder={`Your name: ${user.name}`}
+					/>
+					<AuthInput
+						type='email'
+						value={email}
+						setValue={setEmail}
+						errors={emailValErr}
+						setErrors={setEmailValErr}
+						clsName='modal-input'
+						allowEmpty
+						placeholder={`Your email: ${user.email}`}
+					/>
+					<SubmitButton cls='blue-btn' txt='Update info' />
+				</form>
+				{error ? <FailAlert txt={error.message} /> : <></>}
+			</>
+		);
+	}
+
 	return (
-		<>
-			<form onSubmit={handleUpdate} className='modal-form'>
-				<AuthInput
-					type='name'
-					value={name}
-					setValue={setName}
-					errors={nameValErr}
-					setErrors={setNameValErr}
-					clsName='modal-input'
-					allowEmpty
-				/>
-				<AuthInput
-					type='email'
-					value={email}
-					setValue={setEmail}
-					errors={emailValErr}
-					setErrors={setEmailValErr}
-					clsName='modal-input'
-					allowEmpty
-				/>
-				<SubmitButton cls='blue-btn' txt='Update info' />
-			</form>
-			{error ? <FailAlert txt={error.message} /> : <></>}
-		</>
+		<div>
+			you are not logged in!
+		</div>
 	);
 }

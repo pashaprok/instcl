@@ -1,24 +1,10 @@
 import React from 'react';
-import { UserID } from '../types/auth.types';
+import { AccountInfoPropsI } from '../types/auth.types';
 import '../styles/account-page.css';
 import { AccountInfoItem, AccountInfoItemDate } from './AccountInfoItem';
 import { LogoutButton } from './buttons/Button';
 import { UpdateProfile } from './updateProfile';
 
-interface UserInfoI {
-	__typename: string;
-	id: UserID;
-	email: string;
-	name: string;
-	password: string;
-	createdAt: number;
-	updatedAt: number;
-	image?: string;
-}
-
-interface AccountInfoPropsI {
-	user: UserInfoI;
-}
 
 export function AccountInfo(props: AccountInfoPropsI) {
 	const { user } = props;
@@ -40,7 +26,7 @@ export function AccountInfo(props: AccountInfoPropsI) {
 					value={user.updatedAt}
 				/>
 				<div className='account-info__btns'>
-					<UpdateProfile />
+					<UpdateProfile user={user} />
 					<LogoutButton
 						cls='blue-btn'
 						txt={<><i className='fas fa-sign-out-alt' /> Logout</>}

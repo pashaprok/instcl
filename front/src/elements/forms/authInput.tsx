@@ -10,6 +10,7 @@ interface AuthInputProps {
 	setErrors: useStateFunction;
 	clsName: 'auth-input' | 'modal-input';
 	allowEmpty?: boolean;
+	placeholder?: string;
 }
 
 function onChangeInput(
@@ -33,10 +34,10 @@ function onChangeInput(
 }
 
 export function AuthInput(props: AuthInputProps) {
-	const { type, value, setValue, errors, setErrors, clsName, allowEmpty } =
+	const { type, value, setValue, errors, setErrors, clsName, allowEmpty, placeholder = `Your ${type}` } =
 		props;
 	const [errTxt, setErrTxt] = useState('');
-	const placeholder = `Your ${type}`;
+	// const placeholder = `Your ${type}`;
 
 	let cls = clsName;
 	const popoverCls = 'errors-popover';
