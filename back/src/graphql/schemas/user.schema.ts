@@ -50,6 +50,7 @@ export default gql`
     email: String!
     name: String!
     password: String!
+    avatar: String
     createdAt: String
     updatedAt: String
   }

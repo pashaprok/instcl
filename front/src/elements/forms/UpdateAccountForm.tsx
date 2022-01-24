@@ -6,6 +6,7 @@ import { SubmitButton } from '../buttons/submitButton';
 import { FailAlert } from '../layout/alerts';
 import { UPDATE_CURRENT_USER_QUERY } from '../../graphql/schemas/updateUser.query';
 import { allEmpty, resetValues, setLSTokens } from '../../utils/handleAuth';
+import { NotAuthorizedMsg } from '../notAuthorizedMsg';
 
 interface userUpdateInfoI {
 	name?: string;
@@ -81,9 +82,5 @@ export function UpdateAccountForm(props: AuthFormPropsI) {
 		);
 	}
 
-	return (
-		<div>
-			you are not logged in!
-		</div>
-	);
+	return <NotAuthorizedMsg />;
 }

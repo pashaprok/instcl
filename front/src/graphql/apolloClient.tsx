@@ -1,11 +1,12 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { createUploadLink } from 'apollo-upload-client';
 import { appConfig } from '../config/app';
 import { extractLSTokens } from '../utils/token.helpers';
 
-const link = createHttpLink({
+const uploadLink = createUploadLink({
 	uri: appConfig.backAPILink,
-	credentials: 'same-origin',
+	credentials: 'same-origin'
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -20,7 +21,6 @@ const authLink = setContext((_, { headers }) => {
 });
 
 export const apolloClient = new ApolloClient({
-	// uri: appConfig.backAPILink,
-	link: authLink.concat(link),
+	link: authLink.concat(uploadLink),
 	cache: new InMemoryCache(),
 });

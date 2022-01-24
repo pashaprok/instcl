@@ -6,6 +6,7 @@ import { REGISTER_QUERY } from '../../graphql/schemas/register.query';
 import { AuthFormPropsI } from '../../types/auth.types';
 import { handleAuth } from '../../utils/handleAuth';
 import { FailAlert } from '../layout/alerts';
+import { PhotoUploadInput } from './photoUploadInput';
 
 export function RegisterForm(props: AuthFormPropsI) {
 	const { setRedirect } = props;
@@ -18,6 +19,8 @@ export function RegisterForm(props: AuthFormPropsI) {
 	const [password, setPassword] = useState('');
 	const [passwordValErr, setPasswordValErr] = useState('');
 
+	const [avatar, setAvatar] = useState(null);
+
 	const [register, { error }] = useMutation(REGISTER_QUERY, {
 		variables: {
 			newUser: {
@@ -25,6 +28,7 @@ export function RegisterForm(props: AuthFormPropsI) {
 				email,
 				password,
 			},
+			avatar
 		},
 	});
 
@@ -65,6 +69,10 @@ export function RegisterForm(props: AuthFormPropsI) {
 					errors={passwordValErr}
 					setErrors={setPasswordValErr}
 					clsName='auth-input'
+				/>
+				<PhotoUploadInput
+					setFile={setAvatar}
+					cls='register-input auth-input'
 				/>
 				<SubmitButton cls='auth-button' txt='Sign up' />
 			</form>

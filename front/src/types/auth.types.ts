@@ -8,7 +8,7 @@ interface UserInfoI {
 	password: string;
 	createdAt: number;
 	updatedAt: number;
-	image?: string;
+	avatar?: string;
 }
 export interface AuthFormPropsI {
 	user?: UserInfoI;

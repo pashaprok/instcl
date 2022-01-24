@@ -37,6 +37,9 @@ export class User {
   @IsNotEmpty({ message: 'Can not be empty!' })
   name: string;
 
+  @Column()
+  avatar: string;
+
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   @IsDate()
   createdAt: Date;

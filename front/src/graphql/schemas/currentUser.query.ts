@@ -7,6 +7,7 @@ export const CURRENT_USER = gql`
 			email
 			name
 			password
+			avatar
 			createdAt
 			updatedAt
 		}

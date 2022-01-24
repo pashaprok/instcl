@@ -4,12 +4,13 @@ import '../styles/account-page.css';
 import { AccountInfoItem, AccountInfoItemDate } from './AccountInfoItem';
 import { LogoutButton } from './buttons/Button';
 import { UpdateProfile } from './updateProfile';
+import { appConfig } from '../config/app';
 
 
 export function AccountInfo(props: AccountInfoPropsI) {
 	const { user } = props;
 	let imageScr: string = '/images/avatar-default.png';
-	if (user.image) imageScr = user.image;
+	if (user.avatar) imageScr = `${appConfig.backImagesLink}/avatar/${user.avatar}`;
 
 	return (
 		<div className='account-info'>

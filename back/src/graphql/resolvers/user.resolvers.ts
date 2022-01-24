@@ -1,6 +1,6 @@
 import { ApolloError, UserInputError } from 'apollo-server';
 import bcrypt from 'bcrypt';
-import { GraphQLUpload, graphqlUploadExpress } from 'graphql-upload';
+import { GraphQLUpload } from 'graphql-upload';
 import {
   createUser,
   deleteUser,
@@ -18,6 +18,7 @@ import { userPartialValidate } from '../../utils/validation';
 import { authJWT, defineUserIdFromRequest } from '../../utils/jwt';
 import { usersActivitiesLogger } from '../../utils/logger';
 import { NotFound } from '../../utils/errors';
+import { uploadImage } from '../../images/image.helpers';
 
 export default {
   Upload: GraphQLUpload,
@@ -60,6 +61,8 @@ export default {
       if (emailExist) {
         throw new ApolloError('Email is already taken!', '401');
       } else {
+        args.newUser.avatar = args.avatar ? await uploadImage(args.avatar, 'avatar') : 'avatar-default.png';
+
         args.newUser.password = passwordHash;
         const user: User = await createUser(args.newUser);
         const { accessToken, refreshToken } = await authJWT(context.res, user);
