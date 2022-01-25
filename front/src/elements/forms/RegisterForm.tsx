@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { AuthInput } from './authInput';
 import { SubmitButton } from '../buttons/submitButton';
@@ -20,6 +20,7 @@ export function RegisterForm(props: AuthFormPropsI) {
 	const [passwordValErr, setPasswordValErr] = useState('');
 
 	const [avatar, setAvatar] = useState(null);
+	const avatarRef = useRef();
 
 	const [register, { error }] = useMutation(REGISTER_QUERY, {
 		variables: {
@@ -72,6 +73,7 @@ export function RegisterForm(props: AuthFormPropsI) {
 				/>
 				<PhotoUploadInput
 					setFile={setAvatar}
+					imageRef={avatarRef}
 					cls='register-input auth-input'
 				/>
 				<SubmitButton cls='auth-button' txt='Sign up' />

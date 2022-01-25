@@ -20,3 +20,10 @@ export async function uploadImage(
   // return { filename, mimetype, encoding };
   return newName;
 }
+
+export async function deleteImage(
+  name: string,
+  type: 'avatar' | 'post',
+) {
+  fs.unlink(path.resolve(__dirname, type, name), () => {});
+}

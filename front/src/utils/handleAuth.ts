@@ -2,7 +2,12 @@ import React from 'react';
 import { ApolloError } from '@apollo/client';
 import { Validation } from './validation';
 import { setLSToken } from './token.helpers';
-import { useStateFunction, useStateFunctionBool } from '../types/common.types';
+import {
+	refObj,
+	useStateFunction,
+	useStateFunctionAny,
+	useStateFunctionBool,
+} from '../types/common.types';
 
 export function allEmpty(values: string[]) {
 	let countEmpty: number = 0;
@@ -40,6 +45,13 @@ function checkValidation(values: string[], errList: string[]) {
 
 export function resetValues(functions: useStateFunction[]) {
 	functions.forEach(f => f(''));
+}
+
+export function resetFileInputs(functions: useStateFunctionAny[], refs: refObj[]) {
+	functions.forEach(f => f(null));
+	refs.forEach(r => {
+		r.current.value = null
+	});
 }
 
 export function setLSTokens(data: any) {

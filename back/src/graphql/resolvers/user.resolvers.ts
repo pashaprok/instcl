@@ -18,7 +18,7 @@ import { userPartialValidate } from '../../utils/validation';
 import { authJWT, defineUserIdFromRequest } from '../../utils/jwt';
 import { usersActivitiesLogger } from '../../utils/logger';
 import { NotFound } from '../../utils/errors';
-import { uploadImage } from '../../images/image.helpers';
+import { deleteImage, uploadImage } from '../../images/image.helpers';
 
 export default {
   Upload: GraphQLUpload,
@@ -133,6 +133,11 @@ export default {
         ) {
           throw new ApolloError('This email is already taken!', '403');
         }
+      }
+
+      if(args.avatar) {
+        updateInfo.avatar = await uploadImage(args.avatar, 'avatar');
+        await deleteImage(userFound.avatar, 'avatar');
       }
 
       updateInfo.updatedAt = new Date();

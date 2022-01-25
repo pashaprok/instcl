@@ -26,7 +26,7 @@ const start = async () => {
       app: express,
       cors: {
         credentials: true,
-        origin: appConfig.frontLink
+        // origin: appConfig.frontLink
       },
       path: '/api/graphql',
     });
