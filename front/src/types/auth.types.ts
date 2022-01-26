@@ -1,5 +1,7 @@
 import { useStateFunctionBool } from './common.types';
 
+export type UserID = number;
+
 interface UserInfoI {
 	__typename: string;
 	id: UserID;
@@ -18,5 +20,3 @@ export interface AuthFormPropsI {
 export interface AccountInfoPropsI {
 	user: UserInfoI;
 }
-
-export type UserID = number;

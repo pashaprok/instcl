@@ -18,7 +18,7 @@ import { userPartialValidate } from '../../utils/validation';
 import { authJWT, defineUserIdFromRequest } from '../../utils/jwt';
 import { usersActivitiesLogger } from '../../utils/logger';
 import { NotFound } from '../../utils/errors';
-import { deleteImage, uploadImage } from '../../images/image.helpers';
+import { deleteImage, makeSquare, uploadImage } from '../../images/image.helpers';
 
 export default {
   Upload: GraphQLUpload,
@@ -61,7 +61,11 @@ export default {
       if (emailExist) {
         throw new ApolloError('Email is already taken!', '401');
       } else {
-        args.newUser.avatar = args.avatar ? await uploadImage(args.avatar, 'avatar') : 'avatar-default.png';
+        args.newUser.avatar = '';
+        if (args.avatar) {
+          args.newUser.avatar = await uploadImage(args.avatar, 'avatar');
+          await makeSquare('avatar', args.newUser.avatar);
+        }
 
         args.newUser.password = passwordHash;
         const user: User = await createUser(args.newUser);
@@ -137,6 +141,7 @@ export default {
 
       if(args.avatar) {
         updateInfo.avatar = await uploadImage(args.avatar, 'avatar');
+        await makeSquare('avatar', updateInfo.avatar);
         await deleteImage(userFound.avatar, 'avatar');
       }
 

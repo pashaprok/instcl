@@ -6,7 +6,7 @@ import { extractLSTokens } from '../utils/token.helpers';
 
 const uploadLink = createUploadLink({
 	uri: appConfig.backAPILink,
-	credentials: 'same-origin'
+	credentials: 'same-origin',
 });
 
 const authLink = setContext((_, { headers }) => {

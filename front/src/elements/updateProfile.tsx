@@ -11,11 +11,16 @@ export function UpdateProfile(props: AccountInfoPropsI) {
 		e.preventDefault();
 		setShowModal(!showModal);
 	};
+
 	return (
 		<>
 			<Button
 				cls='blue-btn'
-				txt={<><i className='fas fa-user-edit' /> Update Profile</>}
+				txt={
+					<>
+						<i className='fas fa-user-edit' /> Update Profile
+					</>
+				}
 				onClickF={toggleModal}
 			/>
 			<Modal

@@ -29,7 +29,7 @@ export function RegisterForm(props: AuthFormPropsI) {
 				email,
 				password,
 			},
-			avatar
+			avatar,
 		},
 	});
 

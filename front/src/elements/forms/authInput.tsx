@@ -34,8 +34,16 @@ function onChangeInput(
 }
 
 export function AuthInput(props: AuthInputProps) {
-	const { type, value, setValue, errors, setErrors, clsName, allowEmpty, placeholder = `Your ${type}` } =
-		props;
+	const {
+		type,
+		value,
+		setValue,
+		errors,
+		setErrors,
+		clsName,
+		allowEmpty,
+		placeholder = `Your ${type}`,
+	} = props;
 	const [errTxt, setErrTxt] = useState('');
 	// const placeholder = `Your ${type}`;
 

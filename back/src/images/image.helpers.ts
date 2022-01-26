@@ -2,22 +2,37 @@ import fs from 'fs';
 import * as path from 'path';
 import { finished } from 'stream/promises';
 import { v4 as uuidv4 } from 'uuid';
+import sharp from 'sharp';
+
+const pathToImage = (
+  type: 'avatar' | 'post',
+  fileName: string
+) => {
+  return path.resolve(__dirname, type, fileName);
+}
+
+export async function makeSquare(
+  type: 'avatar' | 'post',
+  fileName: string
+) {
+  const buffer = fs.readFileSync(pathToImage(type, fileName));
+  await sharp(buffer).resize(1000, 1000).toFormat('png').toFile(pathToImage(type, fileName));
+}
 
 export async function uploadImage(
   file,
   type: 'avatar' | 'post'
 ) {
-  const { createReadStream, filename, mimetype, encoding } = await file;
-  const stream = createReadStream();
+  const { createReadStream, filename } = await file;
+  const stream = await createReadStream();
 
   const fileExt = filename.split('.')[filename.split('.').length-1];
   const newName = `${type}-${uuidv4()}.${fileExt}`;
 
-  const out = fs.createWriteStream(path.resolve(__dirname, type, newName));
-  stream.pipe(out);
+  const out = await fs.createWriteStream(pathToImage('avatar', newName));
+  await stream.pipe(out);
   await finished(out);
 
-  // return { filename, mimetype, encoding };
   return newName;
 }
 

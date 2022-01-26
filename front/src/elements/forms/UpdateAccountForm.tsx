@@ -5,7 +5,12 @@ import { AuthInput } from './authInput';
 import { SubmitButton } from '../buttons/submitButton';
 import { FailAlert } from '../layout/alerts';
 import { UPDATE_CURRENT_USER_QUERY } from '../../graphql/schemas/updateUser.query';
-import { allEmpty, resetFileInputs, resetValues, setLSTokens } from '../../utils/handleAuth';
+import {
+	allEmpty,
+	resetFileInputs,
+	resetValues,
+	setLSTokens,
+} from '../../utils/handleAuth';
 import { NotAuthorizedMsg } from '../notAuthorizedMsg';
 import { PhotoUploadInput } from './photoUploadInput';
 
@@ -32,16 +37,15 @@ export function UpdateAccountForm(props: AuthFormPropsI) {
 	const [update, { error }] = useMutation(UPDATE_CURRENT_USER_QUERY, {
 		variables: {
 			userUpdateInfo,
-			avatar
+			avatar,
 		},
 	});
 
 	const handleUpdate = async (e: React.ChangeEvent<any>) => {
 		e.preventDefault();
-		const validationSuccess = allEmpty([nameValErr, emailValErr]) && !allEmpty([name, email]);
-		if (
-			 validationSuccess || avatar
-		) {
+		const validationSuccess =
+			allEmpty([nameValErr, emailValErr]) && !allEmpty([name, email]);
+		if (validationSuccess || avatar) {
 			try {
 				const res = await update();
 				if (res.data) {
