@@ -5,6 +5,9 @@ export type useStateFunctionAny = React.Dispatch<React.SetStateAction<any>>;
 export type useStateFunctionBool = React.Dispatch<
 	React.SetStateAction<boolean>
 >;
+export type useStateFunctionNumber = React.Dispatch<
+	React.SetStateAction<number>
+>;
 
 export type refObj = React.MutableRefObject<any>;
 export type gqlResponse = 'data' | 'loading' | 'error';

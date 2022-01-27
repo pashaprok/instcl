@@ -26,7 +26,6 @@
 }
 
 .users-list__item:hover {
-    cursor: pointer;
     transform: scale(1.1) translateX(30px);
 }
 
