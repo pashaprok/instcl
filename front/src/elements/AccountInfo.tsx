@@ -4,19 +4,16 @@ import '../styles/account-page.css';
 import { AccountInfoItem, AccountInfoItemDate } from './AccountInfoItem';
 import { LogoutButton } from './buttons/Button';
 import { UpdateProfile } from './updateProfile';
-import { appConfig } from '../config/app';
-
+import { AccountPhotoSection } from './AccountPhotoSection';
+import { defineImageSrc } from '../helpers/defineImageSrc';
 
 export function AccountInfo(props: AccountInfoPropsI) {
 	const { user } = props;
-	let imageScr: string = '/images/avatar-default.png';
-	if (user.avatar) imageScr = `${appConfig.backImagesLink}/avatar/${user.avatar}`;
+	const imageScr = defineImageSrc(user.avatar, 'avatar');
 
 	return (
 		<div className='account-info'>
-			<div className='photo-section'>
-				<img className='avatar' src={imageScr} alt='avatar' />
-			</div>
+			<AccountPhotoSection imgLink={imageScr} />
 			<div className='info-section'>
 				<AccountInfoItem name='User ID' value={user.id} />
 				<AccountInfoItem name='Name' value={user.name} />
@@ -30,7 +27,11 @@ export function AccountInfo(props: AccountInfoPropsI) {
 					<UpdateProfile user={user} />
 					<LogoutButton
 						cls='blue-btn'
-						txt={<><i className='fas fa-sign-out-alt' /> Logout</>}
+						txt={
+							<>
+								<i className='fas fa-sign-out-alt' /> Logout
+							</>
+						}
 					/>
 				</div>
 			</div>

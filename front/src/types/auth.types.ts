@@ -20,3 +20,12 @@ export interface AuthFormPropsI {
 export interface AccountInfoPropsI {
 	user: UserInfoI;
 }
+
+export interface UserListPropsI {
+	currentUser: UserInfoI;
+	list: UserInfoI[];
+}
+
+export interface UsersListItemPropsI {
+	user: UserInfoI;
+}
