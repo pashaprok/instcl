@@ -1,0 +1,33 @@
+.post-item {
+    cursor: pointer;
+}
+
+.post-item__wrapper {
+    transition: background-color 0.2s ease-in-out;
+}
+
+.post-item__wrapper:hover {
+    background-color: #1C2733;
+}
+
+.post-header {
+    padding: 15px 0;
+    font-size: 24px;
+}
+
+.post-info {
+    font-size: 18px;
+}
+
+.content {
+    padding: 15px 0;
+    font-weight: lighter;
+}
+
+.date {
+    font-weight: lighter;
+}
+
+.date span {
+    font-weight: normal;
+}

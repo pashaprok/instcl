@@ -16,6 +16,10 @@ export class Post {
 
   @Column()
   @IsNotEmpty({ message: 'Can not be empty!' })
+  photo: string;
+
+  @Column()
+  @IsNotEmpty({ message: 'Can not be empty!' })
   @MinLength(3, {
     message: 'Title is too short',
   })

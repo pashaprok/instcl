@@ -4,7 +4,7 @@ export function defineImageSrc(
 	imageLink: string | undefined,
 	type: 'avatar' | 'post',
 ) {
-	let imageScr: string = '/images/avatar-default.png';
+	let imageScr: string = `/images/${type}-default.png`;
 	if (imageLink && type === 'avatar')
 		imageScr = `${appConfig.backImagesLink}/avatar/${imageLink}`;
 

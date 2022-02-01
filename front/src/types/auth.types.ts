@@ -2,7 +2,7 @@ import { useStateFunctionBool } from './common.types';
 
 export type UserID = number;
 
-interface UserInfoI {
+export interface UserInfoI {
 	__typename: string;
 	id: UserID;
 	email: string;
@@ -12,6 +12,7 @@ interface UserInfoI {
 	updatedAt: number;
 	avatar?: string;
 }
+
 export interface AuthFormPropsI {
 	user?: UserInfoI;
 	setRedirect: useStateFunctionBool;

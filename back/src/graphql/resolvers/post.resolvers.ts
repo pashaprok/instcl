@@ -16,6 +16,7 @@ import { ValidationResponse } from '../../types/validation.types';
 import { postPartialValidate } from '../../utils/validation';
 import { checkPostRights } from '../../utils/checkRights';
 import { defineUserIdFromRequest } from '../../utils/jwt';
+import { deleteImage, uploadImage } from '../../images/image.helpers';
 
 export default {
   Query: {
@@ -50,16 +51,27 @@ export default {
 
       const { newPost } = args;
       newPost.author = authorId;
+      newPost.photo = await uploadImage(args.photo, 'post');
 
       return createPost(newPost);
     },
     async updatePost(parent, args, context, info) {
       const authorId: UserID = defineUserIdFromRequest(context);
+      const postFound: Post = await getPost(args.postId);
+      if (!postFound) {
+        if (!postFound) NotFound('Post');
+      }
+
       const postValidation: ValidationResponse = await postPartialValidate(
         args.postUpdateInfo,
       );
       if (postValidation.status === 'fail') {
         throw new UserInputError(postValidation.msg, postValidation);
+      }
+
+      if (args.photo) {
+        args.postUpdateInfo.photo = await uploadImage(args.photo, 'post');
+        await deleteImage(postFound.photo, 'post');
       }
 
       await checkPostRights(+args.postId, authorId);
@@ -68,7 +80,7 @@ export default {
     async deletePost(parent, args, context, info) {
       try {
         const authorId: UserID = defineUserIdFromRequest(context);
-        await checkPostRights(+args.postId, authorId);
+        // await checkPostRights(+args.postId, authorId);
         await deletePost(+args.postId);
         return { message: 'success' };
       } catch (e) {

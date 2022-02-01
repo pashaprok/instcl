@@ -1,0 +1,47 @@
+.create-post-form {
+    margin: 30px auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.create-post-form > .form-part {
+    width: 50%;
+    padding: 0 15px;
+}
+.create-post-form > .form-part.full-width {
+    width: 100%;
+}
+
+.form-part > input,
+.form-part > textarea {
+    width: 100%;
+}
+
+.create-post-input,
+.create-post-textarea {
+    font-size: 22px;
+    color: #fff;
+    padding: 15px 30px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #4BA0EC;
+    transition: all 0.2s ease-in-out;
+}
+
+.create-post-input.file {
+    padding: 13px 30px;
+}
+
+.create-post-input:focus,
+.create-post-textarea:focus {
+    color: #1C2733E5;
+    background-color: #fff;
+}
+
+.create-post-textarea {
+    resize: vertical;
+}

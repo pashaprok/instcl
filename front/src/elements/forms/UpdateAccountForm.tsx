@@ -5,12 +5,8 @@ import { AuthInput } from './authInput';
 import { SubmitButton } from '../buttons/submitButton';
 import { FailAlert } from '../layout/alerts';
 import { UPDATE_CURRENT_USER_QUERY } from '../../graphql/schemas/updateUser.query';
-import {
-	allEmpty,
-	resetFileInputs,
-	resetValues,
-	setLSTokens,
-} from '../../utils/handleAuth';
+import { allEmpty, setLSTokens } from '../../utils/handleAuth';
+import { resetFileInputs, resetValues } from '../../helpers/formHelpers';
 import { NotAuthorizedMsg } from '../notAuthorizedMsg';
 import { PhotoUploadInput } from './photoUploadInput';
 

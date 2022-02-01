@@ -29,7 +29,7 @@ export async function uploadImage(
   const fileExt = filename.split('.')[filename.split('.').length-1];
   const newName = `${type}-${uuidv4()}.${fileExt}`;
 
-  const out = await fs.createWriteStream(pathToImage('avatar', newName));
+  const out = await fs.createWriteStream(pathToImage(type, newName));
   await stream.pipe(out);
   await finished(out);
 

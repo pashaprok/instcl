@@ -19,15 +19,11 @@ export const TabTitle: React.FC<TabTitlePropsI> = ({
 	}, [setSelectedTab, index]);
 
 	let cls = '';
-	if(selectedTab === index) cls = 'selected';
+	if (selectedTab === index) cls = 'selected';
 
 	return (
 		<div className='tab-title__item'>
-			<button
-				className={cls}
-				onClick={onClick}
-				type='button'
-			>
+			<button className={cls} onClick={onClick} type='button'>
 				{title}
 			</button>
 		</div>

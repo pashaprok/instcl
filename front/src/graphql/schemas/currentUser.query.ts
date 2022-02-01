@@ -14,7 +14,7 @@ export const CURRENT_USER = gql`
 	}
 `;
 
-export const ALL_USERS_WITH_CURRENT = gql`
+export const ACCOUNT_PAGE = gql`
 	query Query {
 		getCurrentUser {
 			id
@@ -30,6 +30,14 @@ export const ALL_USERS_WITH_CURRENT = gql`
 			email
 			name
 			avatar
+		}
+		getAllMyPosts {
+			id
+			title
+			content
+			photo
+			createdAt
+			updatedAt
 		}
 	}
 `;

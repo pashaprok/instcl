@@ -4,6 +4,8 @@ import { Post } from '../entities/post.entity';
 import { getPost, getUserPosts } from '../repositories/post.repository';
 import { NotFound } from './errors';
 import { UserID } from '../types/user.types';
+import { getById } from '../repositories/user.repository';
+import { User } from '../entities/user.entity';
 
 interface Id {
   id: number;
@@ -25,6 +27,9 @@ async function checkPostExist(postId: PostID): Promise<Post> {
 }
 
 export async function checkPostRights(postId: PostID, userId: UserID) {
+  const userFound: User = await getById(userId);
+  if (!userFound) NotFound('User');
+
   const postFound: Post = await checkPostExist(postId);
   const userPosts: Post[] = await getUserPosts(userId);
   const check: boolean = checkBelongs(userPosts, postFound.id);
