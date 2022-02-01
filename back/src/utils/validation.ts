@@ -61,6 +61,20 @@ class Validation {
   }
 }
 
+function filterEmptyAttr(obj: Object) {
+  for (let prop in obj) {
+    if (
+      obj[prop] === null ||
+      obj[prop] === undefined ||
+      obj[prop] === ''
+    ) {
+      delete obj[prop];
+    }
+  }
+
+  return obj;
+}
+
 export function userPartialValidate(userInput: Partial<User>) {
   return new Validation(userInput, User, true).validate();
 }
@@ -70,7 +84,8 @@ export function userFullValidate(userInput: Partial<User>) {
 }
 
 export function postPartialValidate(postInput: Partial<Post>) {
-  return new Validation(postInput, Post, true).validate();
+  const filter = filterEmptyAttr(postInput);
+  return new Validation(filter, Post, true).validate();
 }
 
 export function postFullValidate(postInput: Partial<Post>) {

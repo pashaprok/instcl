@@ -1,66 +1,68 @@
 import React, { useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { CREATE_POST } from '../../graphql/schemas/createPost.mutation';
+import { PostFormPropsI } from '../../types/posts.types';
+import { UPDATE_POST } from '../../graphql/schemas/updatePost.mutation';
+import { handleSubmitPostForm, onChangeInput } from '../../utils/handlePost';
+import { PhotoUploadInput } from './photoUploadInput';
 import { SubmitButton } from '../buttons/submitButton';
 import { FailAlert } from '../layout/alerts';
-import { PhotoUploadInput } from './photoUploadInput';
-import '../../styles/create-post-form.css';
-import { ACCOUNT_PAGE } from '../../graphql/schemas/currentUser.query';
-import { handleSubmitPostForm, onChangeInput } from '../../utils/handlePost';
 
-export function CreateNewPost() {
+export function UpdatePost(props: PostFormPropsI) {
+	const { setRedirect, post } = props;
+
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [photo, setPhoto] = useState(null);
 	const photoRef = useRef();
 
-	const [createPost, { error }] = useMutation(CREATE_POST, {
+	const [update, { error }] = useMutation(UPDATE_POST, {
 		variables: {
-			newPost: {
+			postId: post.id,
+			postUpdateInfo: {
 				title,
 				content,
 			},
 			photo,
 		},
-		refetchQueries: [ACCOUNT_PAGE],
 	});
 
-	const handleCreate = async (e: React.ChangeEvent<any>) => {
+	const handleUpdate = async (e: React.ChangeEvent<any>) => {
 		await handleSubmitPostForm(
 			e,
 			[title, content],
-			createPost,
+			update,
 			[setTitle, setContent],
 			{ ref: photoRef, set: setPhoto },
+			setRedirect,
 		);
 	};
 
 	return (
 		<>
-			<form onSubmit={handleCreate} className='create-post-form'>
+			<form onSubmit={handleUpdate} className='modal-form'>
 				<div className='form-part'>
 					<input
 						value={title}
 						type='text'
-						placeholder='post title'
-						className='create-post-input'
+						placeholder={`Now title: ${post.title}`}
+						className='modal-input'
 						onChange={e => onChangeInput(e, setTitle)}
 					/>
 				</div>
 				<PhotoUploadInput
-					cls='create-post-input file'
+					cls='modal-input update-upload'
 					setFile={setPhoto}
 					imageRef={photoRef}
 				/>
 				<div className='form-part full-width'>
 					<textarea
 						value={content}
-						className='create-post-textarea'
-						placeholder='post content'
+						className='modal-textarea'
+						placeholder={`Now text: ${post.content}`}
 						onChange={e => onChangeInput(e, setContent)}
 					/>
 				</div>
-				<SubmitButton cls='blue-btn' txt='Create post' />
+				<SubmitButton cls='blue-btn' txt='Update post' />
 			</form>
 			{error ? <FailAlert txt={error.message} /> : <></>}
 		</>

@@ -1,4 +1,4 @@
-import { useStateFunctionBool } from './common.types';
+import { FormPropsI } from './common.types';
 
 export type UserID = number;
 
@@ -13,9 +13,8 @@ export interface UserInfoI {
 	avatar?: string;
 }
 
-export interface AuthFormPropsI {
+export interface AuthFormPropsI extends FormPropsI {
 	user?: UserInfoI;
-	setRedirect: useStateFunctionBool;
 }
 
 export interface AccountInfoPropsI {

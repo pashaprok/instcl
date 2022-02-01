@@ -56,6 +56,22 @@
     color: #fff;
 }
 
+.red-btn {
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    padding: 15px 30px;
+    border: 2px solid #C12D2E;
+    background-color: transparent;
+    color: #C12D2E;
+    transition: all 0.2s ease-in-out;
+}
+
+.red-btn:hover {
+    background-color: #C12D2E;
+    color: #fff;
+}
+
 .account-info__btns > .blue-btn:first-child {
     margin-right: 30px;
 }

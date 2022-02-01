@@ -2,16 +2,17 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { HeadingOne } from '../elements/layout/titles';
 import { redirectToLogin } from '../elements/redirects';
-import { ALL_USERS_WITH_CURRENT } from '../graphql/schemas/currentUser.query';
+import { ACCOUNT_PAGE } from '../graphql/schemas/currentUser.query';
 import { LoadingSpinner } from '../elements/LoadingSpinner';
 import { AccountInfo } from '../elements/AccountInfo';
 import { Header } from '../elements/layout/headers';
 import { Tabs } from '../elements/layout/Tabs';
 import { TabContent } from '../elements/layout/TabContent';
 import { UsersList } from '../elements/UsersList';
+import { MyPosts } from '../elements/MyPosts';
 
 export function AccountPage() {
-	const { data, error } = useQuery(ALL_USERS_WITH_CURRENT);
+	const { data, error } = useQuery(ACCOUNT_PAGE);
 
 	if (error) {
 		return redirectToLogin;
@@ -29,7 +30,7 @@ export function AccountPage() {
 					</div>
 					<Tabs>
 						<TabContent title='My posts'>
-							Strawberry is red
+							<MyPosts posts={data.getAllMyPosts} />
 						</TabContent>
 						<TabContent title='Other users'>
 							<div className='other-users'>
@@ -40,7 +41,7 @@ export function AccountPage() {
 							</div>
 						</TabContent>
 					</Tabs>
-					</div>
+				</div>
 			</>
 		);
 	}

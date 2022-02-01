@@ -16,7 +16,7 @@ import { ValidationResponse } from '../../types/validation.types';
 import { postPartialValidate } from '../../utils/validation';
 import { checkPostRights } from '../../utils/checkRights';
 import { defineUserIdFromRequest } from '../../utils/jwt';
-import { deleteImage, uploadImage } from '../../images/image.helpers';
+import { deleteImage, uploadImage, widthOptimizeResize } from '../../images/image.helpers';
 
 export default {
   Query: {
@@ -52,6 +52,7 @@ export default {
       const { newPost } = args;
       newPost.author = authorId;
       newPost.photo = await uploadImage(args.photo, 'post');
+      await widthOptimizeResize('post', newPost.photo);
 
       return createPost(newPost);
     },
@@ -71,16 +72,24 @@ export default {
 
       if (args.photo) {
         args.postUpdateInfo.photo = await uploadImage(args.photo, 'post');
+        await widthOptimizeResize('post', args.postUpdateInfo.photo);
         await deleteImage(postFound.photo, 'post');
       }
 
       await checkPostRights(+args.postId, authorId);
+      args.postUpdateInfo.updatedAt = new Date();
       return updatePost(+args.postId, args.postUpdateInfo);
     },
     async deletePost(parent, args, context, info) {
       try {
         const authorId: UserID = defineUserIdFromRequest(context);
-        // await checkPostRights(+args.postId, authorId);
+        const postFound: Post = await getPost(args.postId);
+        if (!postFound) {
+          if (!postFound) NotFound('Post');
+        }
+
+        await checkPostRights(+args.postId, authorId);
+        await deleteImage(postFound.photo, 'post');
         await deletePost(+args.postId);
         return { message: 'success' };
       } catch (e) {

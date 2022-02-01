@@ -11,6 +11,14 @@ const pathToImage = (
   return path.resolve(__dirname, type, fileName);
 }
 
+export async function widthOptimizeResize(
+  type: 'avatar' | 'post',
+  fileName: string
+) {
+  const buffer = fs.readFileSync(pathToImage(type, fileName));
+  await sharp(buffer).resize(1920).toFile(pathToImage(type, fileName));
+}
+
 export async function makeSquare(
   type: 'avatar' | 'post',
   fileName: string

@@ -6,6 +6,7 @@
     width: 100vw;
     min-height: 100vh;
     background-color: rgba(28, 39, 51, 0.9);
+    overflow-y: scroll;
 }
 
 .modal-main {
@@ -14,7 +15,7 @@
     left: 50%;
     transform: translateX(-50%);
     position: absolute;
-    margin: 100px auto;
+    margin: 100px auto 100px;
     width: 70%;
     max-width: 900px;
     padding: 15px 30px;
@@ -40,7 +41,7 @@
     padding: 0;
 }
 
-.modal-input {
+.modal-input, .modal-textarea {
     width: 100%;
     outline: none;
     font-size: 18px;
@@ -50,7 +51,8 @@
     transition: all 0.2s ease-in-out;
 }
 
-.modal-input:focus {
+.modal-input:focus,
+.modal-textarea:focus {
     background-color: #283340;
     color: #fff;
 }
@@ -63,4 +65,18 @@
 
 .modal-input::placeholder {
     color: #8A98A4;
+}
+
+.modal-photo-wrapper {
+    width: 100%;
+}
+
+.modal-photo-wrapper img {
+    width: 100%;
+    height: auto;
+}
+
+.full-width-btn {
+    width: 100%;
+    margin: 15px 0;
 }

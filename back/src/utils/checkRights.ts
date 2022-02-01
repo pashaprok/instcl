@@ -12,12 +12,8 @@ interface Id {
 }
 
 function checkBelongs<T extends Id>(arr: T[], id: PostID): boolean {
-  let check = false;
-  arr.forEach((i) => {
-    check = i.id === id;
-  });
-
-  return check;
+  let check = arr.filter(post => post.id === id);
+  return !!check;
 }
 
 async function checkPostExist(postId: PostID): Promise<Post> {

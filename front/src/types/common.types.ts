@@ -11,3 +11,7 @@ export type useStateFunctionNumber = React.Dispatch<
 
 export type refObj = React.MutableRefObject<any>;
 export type gqlResponse = 'data' | 'loading' | 'error';
+
+export interface FormPropsI {
+	setRedirect: useStateFunctionBool;
+}
