@@ -1,3 +1,5 @@
+@import 'vars.css';
+
 .tabs-titles {
     display: flex;
     flex-direction: row;
@@ -18,21 +20,21 @@
     border: none;
     outline: none;
     font-size: 20px;
-    color: #4BA0EC;
+    color: var(--colorLightMain);
     cursor: pointer;
     padding: 15px 60px;
-    transition: all 0.2s ease-in-out;
+    transition: var(--transition);
 }
 
 .tab-title__item > button:hover {
-    color: #fff;
+    color: var(--colorLight);
 }
 
 .tab-title__item > button.selected:hover {
     cursor: default;
-    color: #4BA0EC;
+    color: var(--colorLightMain);
 }
 
 .tab-title__item > button.selected {
-    border-bottom: 2px solid #4BA0EC;
+    border-bottom: 2px solid var(--colorLightMain);
 }

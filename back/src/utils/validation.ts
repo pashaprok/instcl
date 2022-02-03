@@ -61,18 +61,15 @@ class Validation {
   }
 }
 
-function filterEmptyAttr(obj: Object) {
-  for (let prop in obj) {
-    if (
-      obj[prop] === null ||
-      obj[prop] === undefined ||
-      obj[prop] === ''
-    ) {
-      delete obj[prop];
+function filterEmptyAttr(obj: any) {
+  const result = obj;
+  for (const [key, value] of Object.entries(result)) {
+    if (!value) {
+      delete result[key];
     }
   }
 
-  return obj;
+  return result;
 }
 
 export function userPartialValidate(userInput: Partial<User>) {

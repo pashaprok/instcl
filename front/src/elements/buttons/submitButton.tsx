@@ -1,12 +1,11 @@
 import React from 'react';
 
-interface SubmitButtonPropsI {
+interface SubmitButtonProps {
 	cls: string;
 	txt?: string;
 }
 
-export function SubmitButton(props: SubmitButtonPropsI) {
-	const { cls, txt = 'Submit' } = props;
+export function SubmitButton({ cls, txt = 'Submit' }: SubmitButtonProps) {
 	return (
 		<div className='form-part'>
 			<input type='submit' value={txt} className={cls} />

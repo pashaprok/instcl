@@ -1,3 +1,5 @@
+@import 'vars.css';
+
 .create-post-form {
     margin: 30px auto;
     width: 100%;
@@ -23,13 +25,13 @@
 .create-post-input,
 .create-post-textarea {
     font-size: 22px;
-    color: #fff;
+    color:  var(--colorLight);
     padding: 15px 30px;
     background-color: transparent;
     border: none;
     outline: none;
-    border-bottom: 2px solid #4BA0EC;
-    transition: all 0.2s ease-in-out;
+    border-bottom: 2px solid  var(--colorLightMain);
+    transition: var(--transition);
 }
 
 .create-post-input.file {
@@ -38,8 +40,8 @@
 
 .create-post-input:focus,
 .create-post-textarea:focus {
-    color: #1C2733E5;
-    background-color: #fff;
+    color: var(--colorDarkest);
+    background-color: var(--colorLight);
 }
 
 .create-post-textarea {

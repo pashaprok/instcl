@@ -1,5 +1,5 @@
 import React from 'react';
-import { AccountInfoPropsI } from '../types/auth.types';
+import { AccountInfoProps } from '../types/auth.types';
 import '../styles/account-page.css';
 import { AccountInfoItem, AccountInfoItemDate } from './AccountInfoItem';
 import { LogoutButton } from './buttons/Button';
@@ -7,8 +7,7 @@ import { UpdateProfile } from './updateProfile';
 import { AccountPhotoSection } from './AccountPhotoSection';
 import { defineImageSrc } from '../helpers/defineImageSrc';
 
-export function AccountInfo(props: AccountInfoPropsI) {
-	const { user } = props;
+export function AccountInfo({ user }: AccountInfoProps) {
 	const imageScr = defineImageSrc(user.avatar, 'avatar');
 
 	return (

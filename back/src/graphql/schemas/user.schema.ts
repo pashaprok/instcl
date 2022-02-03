@@ -11,14 +11,9 @@ export default gql`
     loginUser(loginInfo: LoginInput!): AuthUser!
     registerUser(newUser: UserRegisterInput!, avatar: Upload): AuthUser!
     updateCurrentUser(
-      userUpdateInfo: UserUpdateInput,
-      avatar: Upload
-    ): AuthUser!
-    updateUser(
-      userId: ID!
       userUpdateInfo: UserUpdateInput
       avatar: Upload
-    ): User!
+    ): AuthUser!
     deleteUser(userId: ID!): ResponseMsg!
   }
 

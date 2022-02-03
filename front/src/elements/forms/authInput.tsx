@@ -33,19 +33,17 @@ function onChangeInput(
 	setValue(event.target.value);
 }
 
-export function AuthInput(props: AuthInputProps) {
-	const {
-		type,
-		value,
-		setValue,
-		errors,
-		setErrors,
-		clsName,
-		allowEmpty,
-		placeholder = `Your ${type}`,
-	} = props;
+export function AuthInput({
+	type,
+	value,
+	setValue,
+	errors,
+	setErrors,
+	clsName,
+	allowEmpty = false,
+	placeholder = `Your ${type}`,
+}: AuthInputProps) {
 	const [errTxt, setErrTxt] = useState('');
-	// const placeholder = `Your ${type}`;
 
 	let cls = clsName;
 	const popoverCls = 'errors-popover';

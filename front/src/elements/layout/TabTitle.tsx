@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 import { useStateFunctionNumber } from '../../types/common.types';
 
-type TabTitlePropsI = {
+type TabTitleProps = {
 	title: string;
 	index: number;
 	selectedTab: number;
 	setSelectedTab: useStateFunctionNumber;
 };
 
-export const TabTitle: React.FC<TabTitlePropsI> = ({
+export const TabTitle: React.FC<TabTitleProps> = ({
 	title,
 	selectedTab,
 	setSelectedTab,

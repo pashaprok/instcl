@@ -1,9 +1,9 @@
 import React from 'react';
 
-type TabContentPropsI = {
+type TabContentProps = {
 	title: string;
 };
 
-export const TabContent: React.FC<TabContentPropsI> = ({ children, title }) => (
-	<div title={title}>{children}</div>
+export const TabContent: React.FC<TabContentProps> = ({ children, title }) => (
+	<div className={`tab-content-${title}`}>{children}</div>
 );

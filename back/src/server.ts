@@ -1,16 +1,16 @@
 import 'reflect-metadata';
 import 'express-async-errors';
 import { createConnection } from 'typeorm';
-import { appConfig } from './config/app';
-import { ormConfig } from './config/orm';
-import apolloServer from './graphql/apollo.server';
 import Express from 'express';
-import app from './app';
-import { catchErrors } from './middlewares/catchErrors';
-import { appWorkLogger } from './utils/logger';
 import { graphqlUploadExpress } from 'graphql-upload';
 import path from 'path';
 import cors from 'cors';
+import { appConfig } from './config/app';
+import { ormConfig } from './config/orm';
+import apolloServer from './graphql/apollo.server';
+import app from './app';
+import { catchErrors } from './middlewares/catchErrors';
+import { appWorkLogger } from './utils/logger';
 
 const { express } = app;
 const hostname = 'localhost'; // dev

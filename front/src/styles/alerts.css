@@ -1,3 +1,5 @@
+@import 'vars.css';
+
 .alert {
     display: block;
     position: fixed;
@@ -8,8 +10,8 @@
 }
 
 .fail {
-    background-color: #C12D2E;
-    color: #fff;
+    background-color: var(--colorDanger);
+    color: var(--colorLight);
 }
 
 .alert.hidden {

@@ -2,11 +2,11 @@ import React, { ReactElement, useState } from 'react';
 import { TabTitle } from './TabTitle';
 import '../../styles/tabs.css';
 
-type TabsPropsI = {
+type TabsProps = {
 	children: ReactElement[];
 };
 
-export const Tabs: React.FC<TabsPropsI> = ({ children }) => {
+export const Tabs: React.FC<TabsProps> = ({ children }) => {
 	const [selectedTab, setSelectedTab] = useState(0);
 
 	return (

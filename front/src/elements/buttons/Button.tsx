@@ -10,8 +10,7 @@ interface ButtonPropsFuncI extends ButtonPropsI {
 	onClickF: Function;
 }
 
-export function Button(props: ButtonPropsFuncI) {
-	const { cls, onClickF, txt } = props;
+export function Button({ cls, onClickF, txt }: ButtonPropsFuncI) {
 	return (
 		<button type='button' className={cls} onClick={e => onClickF(e)}>
 			{txt}
@@ -19,9 +18,7 @@ export function Button(props: ButtonPropsFuncI) {
 	);
 }
 
-export function LogoutButton(props: ButtonPropsI) {
-	const { cls, txt } = props;
-
+export function LogoutButton({ cls, txt }: ButtonPropsI) {
 	const logout = (e: React.ChangeEvent) => {
 		e.preventDefault();
 		resetLSToken();

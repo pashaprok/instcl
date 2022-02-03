@@ -1,10 +1,10 @@
 import React from 'react';
 
-interface NoContentPropsI {
+interface NoContentProps {
 	txt: string;
 	cls: string;
 }
 
-export const NoContentMsg: React.FC<NoContentPropsI> = ({ txt, cls }) => (
+export const NoContentMsg: React.FC<NoContentProps> = ({ txt, cls }) => (
 	<div className={cls}>{txt}</div>
 );

@@ -12,7 +12,7 @@ interface Id {
 }
 
 function checkBelongs<T extends Id>(arr: T[], id: PostID): boolean {
-  let check = arr.filter(post => post.id === id);
+  const check = arr.filter((post) => post.id === id);
   return !!check;
 }
 
@@ -22,10 +22,14 @@ async function checkPostExist(postId: PostID): Promise<Post> {
   return post;
 }
 
-export async function checkPostRights(postId: PostID, userId: UserID) {
-  const userFound: User = await getById(userId);
-  if (!userFound) NotFound('User');
+async function checkUserExist(userId: UserID): Promise<User> {
+  const user: User = await getById(userId);
+  if (!user) NotFound('Post');
+  return user;
+}
 
+export async function checkPostRights(postId: PostID, userId: UserID) {
+  await checkUserExist(userId);
   const postFound: Post = await checkPostExist(postId);
   const userPosts: Post[] = await getUserPosts(userId);
   const check: boolean = checkBelongs(userPosts, postFound.id);

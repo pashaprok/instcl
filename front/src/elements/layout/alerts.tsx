@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import '../../styles/alerts.css';
 
-interface SAlertPropsI {
+interface SAlertProps {
 	txt: string;
 }
 
-interface AlertPropsI extends SAlertPropsI {
+interface AlertProps extends SAlertProps {
 	type: 'success' | 'fail' | 'warn';
 }
 
-function Alert(props: AlertPropsI) {
-	const { txt, type } = props;
+function Alert({ txt, type }: AlertProps) {
 	const cls = `alert ${type}`;
 	const [show, setShow] = useState(true);
 
@@ -22,7 +21,6 @@ function Alert(props: AlertPropsI) {
 	return <></>;
 }
 
-export function FailAlert(props: SAlertPropsI) {
-	const { txt } = props;
+export function FailAlert({ txt }: SAlertProps) {
 	return Alert({ txt, type: 'fail' });
 }

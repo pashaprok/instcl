@@ -1,14 +1,12 @@
 import React from 'react';
 import { ApolloError, useMutation } from '@apollo/client';
-import { PostFormPropsI } from '../types/posts.types';
+import { PostFormProps } from '../types/posts.types';
 import { Button } from './buttons/Button';
 import { DELETE_POST } from '../graphql/schemas/deletePost.mutation';
 import { ACCOUNT_PAGE } from '../graphql/schemas/currentUser.query';
 import { FailAlert } from './layout/alerts';
 
-export function DeletePost(props: PostFormPropsI) {
-	const { setRedirect, post } = props;
-
+export function DeletePost({ setRedirect, post }: PostFormProps) {
 	const [deletePost, { error }] = useMutation(DELETE_POST, {
 		variables: {
 			postId: post.id,

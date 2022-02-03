@@ -63,3 +63,5 @@ class InfoLogger {
 export const appWorkLogger: Logger = new InfoLogger('app-work').logger;
 export const usersActivitiesLogger: Logger = new InfoLogger('users-activities')
   .logger;
+export const postActivityLogger: Logger = new InfoLogger('post-activities')
+  .logger;

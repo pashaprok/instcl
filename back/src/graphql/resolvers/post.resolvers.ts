@@ -16,7 +16,11 @@ import { ValidationResponse } from '../../types/validation.types';
 import { postPartialValidate } from '../../utils/validation';
 import { checkPostRights } from '../../utils/checkRights';
 import { defineUserIdFromRequest } from '../../utils/jwt';
-import { deleteImage, uploadImage, widthOptimizeResize } from '../../images/image.helpers';
+import {
+  deleteImage,
+  uploadImage,
+  widthOptimizeResize,
+} from '../../images/image.helpers';
 
 export default {
   Query: {

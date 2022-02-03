@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Button } from './buttons/Button';
 import { Modal } from './layout/modal';
 import { UpdateAccountForm } from './forms/UpdateAccountForm';
-import { AccountInfoPropsI } from '../types/auth.types';
+import { AccountInfoProps } from '../types/auth.types';
 
-export function UpdateProfile(props: AccountInfoPropsI) {
-	const { user } = props;
+export function UpdateProfile({ user }: AccountInfoProps) {
 	const [showModal, setShowModal] = useState(false);
 	const toggleModal = async (e: React.ChangeEvent<any>) => {
 		e.preventDefault();

@@ -3,13 +3,12 @@ import { useMutation } from '@apollo/client';
 import { AuthInput } from './authInput';
 import { SubmitButton } from '../buttons/submitButton';
 import { REGISTER_QUERY } from '../../graphql/schemas/register.query';
-import { AuthFormPropsI } from '../../types/auth.types';
+import { AuthFormProps } from '../../types/auth.types';
 import { handleAuth } from '../../utils/handleAuth';
 import { FailAlert } from '../layout/alerts';
 import { PhotoUploadInput } from './photoUploadInput';
 
-export function RegisterForm(props: AuthFormPropsI) {
-	const { setRedirect } = props;
+export function RegisterForm({ setRedirect }: AuthFormProps) {
 	const [name, setName] = useState('');
 	const [nameValErr, setNameValErr] = useState('');
 

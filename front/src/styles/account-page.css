@@ -1,3 +1,5 @@
+@import 'vars.css';
+
 .account-info {
     display: flex;
     flex-direction: row;
@@ -45,15 +47,15 @@
     outline: none;
     font-size: 18px;
     padding: 15px 30px;
-    border: 2px solid #4BA0EC;
+    border: 2px solid var(--colorLightMain);
     background-color: transparent;
-    color: #4BA0EC;
-    transition: all 0.2s ease-in-out;
+    color: var(--colorLightMain);
+    transition: var(--transition);
 }
 
 .blue-btn:hover {
-    background-color: #4BA0EC;
-    color: #fff;
+    background-color: var(--colorLightMain);
+    color: var(--colorLight);
 }
 
 .red-btn {
@@ -61,15 +63,15 @@
     outline: none;
     font-size: 18px;
     padding: 15px 30px;
-    border: 2px solid #C12D2E;
+    border: 2px solid var(--colorDanger);
     background-color: transparent;
-    color: #C12D2E;
-    transition: all 0.2s ease-in-out;
+    color: var(--colorDanger);
+    transition: var(--transition);
 }
 
 .red-btn:hover {
-    background-color: #C12D2E;
-    color: #fff;
+    background-color: var(--colorDanger);
+    color: var(--colorLight);
 }
 
 .account-info__btns > .blue-btn:first-child {

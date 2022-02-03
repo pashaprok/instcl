@@ -1,10 +1,9 @@
 import React from 'react';
 
-interface HeaderPropsI {
+interface HeaderProps {
 	children: any;
 }
 
-export function Header(props: HeaderPropsI) {
-	const { children } = props;
+export function Header({ children }: HeaderProps) {
 	return <header className='common-header'>{children}</header>;
 }

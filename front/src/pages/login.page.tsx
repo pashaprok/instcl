@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import '../styles/auth-pages.css';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import { HeadingOne } from '../elements/layout/titles';
 import { LoginForm } from '../elements/forms/LoginForm';
 import { useStateFunctionBool } from '../types/common.types';
-import { redirectToAccount } from '../elements/redirects';
 import { Header } from '../elements/layout/headers';
-import { CURRENT_USER } from '../graphql/schemas/currentUser.query';
+import { ShowAuthPages } from '../helpers/showAuthPages';
 
 const loginPage = (setRedirect: useStateFunctionBool) => (
 	<>
@@ -29,15 +27,5 @@ const loginPage = (setRedirect: useStateFunctionBool) => (
 );
 
 export function LoginPage() {
-	const [redirect, setRedirect] = useState(false);
-	const [content, setContent] = useState(loginPage(setRedirect));
-	const { data } = useQuery(CURRENT_USER);
-
-	useEffect(() => {
-		if (redirect || data) {
-			setContent(redirectToAccount);
-		}
-	}, [redirect, data]);
-
-	return content;
+	return ShowAuthPages(loginPage);
 }

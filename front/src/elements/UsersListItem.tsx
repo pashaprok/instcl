@@ -1,9 +1,8 @@
 import React from 'react';
-import { UsersListItemPropsI } from '../types/auth.types';
+import { UsersListItemProps } from '../types/auth.types';
 import { defineImageSrc } from '../helpers/defineImageSrc';
 
-export function UsersListItem(props: UsersListItemPropsI) {
-	const { user } = props;
+export function UsersListItem({ user }: UsersListItemProps) {
 	const imageScr = defineImageSrc(user.avatar, 'avatar');
 
 	return (

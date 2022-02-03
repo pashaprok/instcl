@@ -1,10 +1,9 @@
 import React from 'react';
-import { UserListPropsI } from '../types/auth.types';
+import { UserListProps } from '../types/auth.types';
 import { UsersListItem } from './UsersListItem';
 import '../styles/users-list.css';
 
-export function UsersList(props: UserListPropsI) {
-	const { list, currentUser } = props;
+export function UsersList({ list, currentUser }: UserListProps) {
 	const users = list.filter(user => user.id !== currentUser.id);
 	return (
 		<>

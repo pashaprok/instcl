@@ -3,12 +3,11 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_QUERY } from '../../graphql/schemas/login.query';
 import { AuthInput } from './authInput';
 import { SubmitButton } from '../buttons/submitButton';
-import { AuthFormPropsI } from '../../types/auth.types';
+import { AuthFormProps } from '../../types/auth.types';
 import { FailAlert } from '../layout/alerts';
 import { handleAuth } from '../../utils/handleAuth';
 
-export function LoginForm(props: AuthFormPropsI) {
-	const { setRedirect } = props;
+export function LoginForm({ setRedirect }: AuthFormProps) {
 	const [email, setEmail] = useState('');
 	const [emailValErr, setEmailValErr] = useState('');
 	const [password, setPassword] = useState('');

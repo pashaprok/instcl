@@ -1,0 +1,13 @@
+:root {
+    /* --- colors --- */
+    --colorLight: #fff;
+    --colorDark: #17202A;
+    --colorDarkSecond: #283340;
+    --colorDarkest: #1C2733E5;
+    --colorLightMain: #4BA0EC;
+    --colorDanger: #C12D2E;
+    --colorGrey: #8A98A4;
+
+    /* --- transition --- */
+    --transition: all 0.2s ease-in-out;
+}

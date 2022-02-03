@@ -1,3 +1,5 @@
+@import 'vars.css';
+
 .users-list-title {
     font-size: 48px;
     font-weight: lighter;
@@ -22,7 +24,7 @@
     margin: 5px auto;
     display: flex;
     flex-direction: row;
-    transition: all 0.2s ease-in-out;
+    transition: var(--transition);
 }
 
 .users-list__item:hover {

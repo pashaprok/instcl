@@ -1,8 +1,8 @@
-import { FormPropsI } from './common.types';
+import { FormProps } from './common.types';
 
 export type UserID = number;
 
-export interface UserInfoI {
+export interface UserInfo {
 	__typename: string;
 	id: UserID;
 	email: string;
@@ -13,19 +13,19 @@ export interface UserInfoI {
 	avatar?: string;
 }
 
-export interface AuthFormPropsI extends FormPropsI {
-	user?: UserInfoI;
+export interface AuthFormProps extends FormProps {
+	user?: UserInfo;
 }
 
-export interface AccountInfoPropsI {
-	user: UserInfoI;
+export interface AccountInfoProps {
+	user: UserInfo;
 }
 
-export interface UserListPropsI {
-	currentUser: UserInfoI;
-	list: UserInfoI[];
+export interface UserListProps {
+	currentUser: UserInfo;
+	list: UserInfo[];
 }
 
-export interface UsersListItemPropsI {
-	user: UserInfoI;
+export interface UsersListItemProps {
+	user: UserInfo;
 }

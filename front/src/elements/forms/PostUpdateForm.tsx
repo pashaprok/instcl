@@ -1,15 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { PostFormPropsI } from '../../types/posts.types';
+import { PostFormProps } from '../../types/posts.types';
 import { UPDATE_POST } from '../../graphql/schemas/updatePost.mutation';
 import { handleSubmitPostForm, onChangeInput } from '../../utils/handlePost';
 import { PhotoUploadInput } from './photoUploadInput';
 import { SubmitButton } from '../buttons/submitButton';
 import { FailAlert } from '../layout/alerts';
 
-export function UpdatePost(props: PostFormPropsI) {
-	const { setRedirect, post } = props;
-
+export function UpdatePost({ setRedirect, post }: PostFormProps) {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [photo, setPhoto] = useState(null);

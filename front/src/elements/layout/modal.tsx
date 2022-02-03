@@ -3,15 +3,14 @@ import '../../styles/modal.css';
 import { Button } from '../buttons/Button';
 import { HeadingThird } from './titles';
 
-interface ModalPropsI {
+interface ModalProps {
 	handleClose: any;
 	show: boolean;
 	children: any;
 	title: string;
 }
 
-export function Modal(props: ModalPropsI) {
-	const { show, children, handleClose, title } = props;
+export function Modal({ show, children, handleClose, title }: ModalProps) {
 	const showHideClassName = show ? 'modal display-block' : 'modal display-none';
 
 	return (

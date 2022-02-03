@@ -1,9 +1,9 @@
-import { UserInfoI } from './auth.types';
-import { FormPropsI } from './common.types';
+import { UserInfo } from './auth.types';
+import { FormProps } from './common.types';
 
 export type PostID = number;
 
-export interface PostInfoI {
+export interface PostInfo {
 	__typename: string;
 	id: PostID;
 	title: string;
@@ -11,9 +11,9 @@ export interface PostInfoI {
 	photo: string;
 	createdAt: number;
 	updatedAt: number;
-	author?: UserInfoI;
+	author?: UserInfo;
 }
 
-export interface PostFormPropsI extends FormPropsI {
-	post: PostInfoI;
+export interface PostFormProps extends FormProps {
+	post: PostInfo;
 }

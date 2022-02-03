@@ -1,10 +1,8 @@
 import React from 'react';
-import { MyPostsPropsI } from './MyPosts';
+import { MyPostsProps } from './MyPosts';
 import { PostItem } from './PostItem';
 
-export function PostsList(props: MyPostsPropsI) {
-	const { posts } = props;
-
+export function PostsList({ posts }: MyPostsProps) {
 	return (
 		<div className='posts-list'>
 			{posts.map(post => (

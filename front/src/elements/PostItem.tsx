@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import { PostInfoI } from '../types/posts.types';
+import { PostInfo } from '../types/posts.types';
 import { defineImageSrc } from '../helpers/defineImageSrc';
 import '../styles/post-item.css';
 import { Modal } from './layout/modal';
 import { UpdatePost } from './forms/PostUpdateForm';
 import { DeletePost } from './DeletePost';
 
-export interface PostPropsI {
-	post: PostInfoI;
+export interface PostProps {
+	post: PostInfo;
 }
 
-export function PostItem(props: PostPropsI) {
-	const { post } = props;
+export function PostItem({ post }: PostProps) {
 	const imgSrc = defineImageSrc(post.photo, 'post');
 
 	const [showModal, setShowModal] = useState(false);

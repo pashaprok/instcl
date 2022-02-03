@@ -1,17 +1,15 @@
 import React from 'react';
-import { PostInfoI } from '../types/posts.types';
+import { PostInfo } from '../types/posts.types';
 import { NoContentMsg } from './NoContent';
 import '../styles/my-posts-list.css';
 import { CreateNewPost } from './forms/CreateNewPost';
 import { PostsList } from './PostsList';
 
-export interface MyPostsPropsI {
-	posts: PostInfoI[];
+export interface MyPostsProps {
+	posts: PostInfo[];
 }
 
-export function MyPosts(props: MyPostsPropsI) {
-	const { posts } = props;
-
+export function MyPosts({ posts }: MyPostsProps) {
 	return (
 		<>
 			<CreateNewPost />

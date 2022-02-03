@@ -18,7 +18,11 @@ import { userPartialValidate } from '../../utils/validation';
 import { authJWT, defineUserIdFromRequest } from '../../utils/jwt';
 import { usersActivitiesLogger } from '../../utils/logger';
 import { NotFound } from '../../utils/errors';
-import { deleteImage, makeSquare, uploadImage } from '../../images/image.helpers';
+import {
+  deleteImage,
+  makeSquare,
+  uploadImage,
+} from '../../images/image.helpers';
 
 export default {
   Upload: GraphQLUpload,
@@ -139,7 +143,7 @@ export default {
         }
       }
 
-      if(args.avatar) {
+      if (args.avatar) {
         updateInfo.avatar = await uploadImage(args.avatar, 'avatar');
         await makeSquare('avatar', updateInfo.avatar);
         await deleteImage(userFound.avatar, 'avatar');
@@ -162,34 +166,6 @@ export default {
         refreshToken,
         user: updatedUser,
       };
-    },
-    async updateUser(parent, args, context, info) {
-      // const userId: UserID = +args.userId;
-      // const updateInfo: Partial<User> = args.userUpdateInfo;
-      // const userValidation: ValidationResponse = await userPartialValidate(
-      //   updateInfo,
-      // );
-      // if (userValidation.status === 'fail') {
-      //   throw new UserInputError(userValidation.msg, userValidation);
-      // }
-      //
-      // const userFound: User = await getById(userId);
-      // if (!userFound) {
-      //   throw new ApolloError('This user does not exist!', '404');
-      // }
-      //
-      // const emailDuplicate: User = await getByEmail(updateInfo.email);
-      // if (emailDuplicate) {
-      //   if (
-      //     emailDuplicate.email === updateInfo.email &&
-      //     emailDuplicate.id !== userId
-      //   ) {
-      //     throw new ApolloError('This email is already taken!', '403');
-      //   }
-      // }
-      //
-      // updateInfo.updatedAt = new Date();
-      // return updateUser(userId, updateInfo);
     },
     async deleteUser(parent, args, context, info): Promise<IResponseMsg> {
       try {

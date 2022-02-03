@@ -1,22 +1,21 @@
 import React, { useRef, useState } from 'react';
 import { ApolloError, useMutation } from '@apollo/client';
-import { AuthFormPropsI } from '../../types/auth.types';
+import { AuthFormProps } from '../../types/auth.types';
 import { AuthInput } from './authInput';
 import { SubmitButton } from '../buttons/submitButton';
 import { FailAlert } from '../layout/alerts';
-import { UPDATE_CURRENT_USER_QUERY } from '../../graphql/schemas/updateUser.query';
+import { UPDATE_CURRENT_USER_QUERY } from '../../graphql/schemas/updateUser.mutation';
 import { allEmpty, setLSTokens } from '../../utils/handleAuth';
 import { resetFileInputs, resetValues } from '../../helpers/formHelpers';
 import { NotAuthorizedMsg } from '../notAuthorizedMsg';
 import { PhotoUploadInput } from './photoUploadInput';
 
-interface userUpdateInfoI {
+interface UserUpdateInfo {
 	name?: string;
 	email?: string;
 }
 
-export function UpdateAccountForm(props: AuthFormPropsI) {
-	const { setRedirect, user } = props;
+export function UpdateAccountForm({ setRedirect, user }: AuthFormProps) {
 	const [name, setName] = useState('');
 	const [nameValErr, setNameValErr] = useState('');
 
@@ -26,7 +25,7 @@ export function UpdateAccountForm(props: AuthFormPropsI) {
 	const [avatar, setAvatar] = useState(null);
 	const avatarRef = useRef();
 
-	const userUpdateInfo: userUpdateInfoI = {};
+	const userUpdateInfo: UserUpdateInfo = {};
 	if (name) userUpdateInfo.name = name;
 	if (email) userUpdateInfo.email = email;
 

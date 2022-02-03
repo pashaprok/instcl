@@ -1,3 +1,5 @@
+@import 'vars.css';
+
 .modal {
     left: 0;
     top: 0;
@@ -10,8 +12,8 @@
 }
 
 .modal-main {
-    color: #1C2733E5;
-    background-color: #fff;
+    color: var(--colorDarkest);
+    background-color: var(--colorLight);
     left: 50%;
     transform: translateX(-50%);
     position: absolute;
@@ -30,7 +32,7 @@
     cursor: pointer;
     border: none;
     outline: none;
-    color: #C12D2E;
+    color: var(--colorDanger);
 }
 
 .modal-title {
@@ -53,18 +55,18 @@
 
 .modal-input:focus,
 .modal-textarea:focus {
-    background-color: #283340;
-    color: #fff;
+    background-color: var(--colorDarkSecond);
+    color: var(--colorLight);
 }
 
 .input-error {
-    background-color: #283340;
-    color: #fff;
-    border-bottom: 2px solid #C12D2E;
+    background-color: var(--colorDarkSecond);
+    color: var(--colorLight);
+    border-bottom: 2px solid var(--colorDanger);
 }
 
 .modal-input::placeholder {
-    color: #8A98A4;
+    color: var(--colorGrey);
 }
 
 .modal-photo-wrapper {

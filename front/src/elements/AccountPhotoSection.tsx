@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
 
-interface AccountPhotoSectionI {
+interface AccountPhotoSectionProps {
 	imgLink: string;
 }
 
-export function AccountPhotoSection(props: AccountPhotoSectionI) {
-	const { imgLink } = props;
+export function AccountPhotoSection({ imgLink }: AccountPhotoSectionProps) {
 	const [loaded, setLoaded] = useState(false);
-
-	function onLoading() {
-		setLoaded(true);
-	}
+	const onLoading = () => setLoaded(true);
 
 	return (
 		<div className='photo-section'>

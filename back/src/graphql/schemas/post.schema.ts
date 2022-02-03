@@ -10,7 +10,11 @@ export default gql`
 
   extend type Mutation {
     createPost(newPost: PostCreateInput!, photo: Upload!): Post!
-    updatePost(postId: ID!, postUpdateInfo: PostUpdateInput, photo: Upload): Post!
+    updatePost(
+      postId: ID!
+      postUpdateInfo: PostUpdateInput
+      photo: Upload
+    ): Post!
     deletePost(postId: ID!): ResponseMsg!
   }
 

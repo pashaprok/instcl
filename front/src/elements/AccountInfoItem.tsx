@@ -1,12 +1,11 @@
 import React from 'react';
 
-interface AccountInfoItemPropsI {
+interface AccountInfoItemProps {
 	name: string;
 	value: string | number;
 }
 
-export function AccountInfoItem(props: AccountInfoItemPropsI) {
-	const { name, value } = props;
+export function AccountInfoItem({ name, value }: AccountInfoItemProps) {
 	return (
 		<div className='info-item'>
 			<div className='info-name'>{name}</div>
@@ -15,8 +14,7 @@ export function AccountInfoItem(props: AccountInfoItemPropsI) {
 	);
 }
 
-export function AccountInfoItemDate(props: AccountInfoItemPropsI) {
-	const { name, value } = props;
+export function AccountInfoItemDate({ name, value }: AccountInfoItemProps) {
 	const date = new Date(+value).toLocaleString();
 	return AccountInfoItem({ name, value: date });
 }

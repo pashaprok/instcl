@@ -9,12 +9,6 @@ export const ormConfig: ConnectionOptions = {
   database: process.env.DBNAME,
   synchronize: true,
   logging: false,
-  // seeds: [
-  //     '../seeds/**/*{.ts,.js}'
-  // ],
-  // factories: [
-  //     '../factories/**/*{.ts,.js}'
-  // ],0
   entities: [`${__dirname}/../entities/**/*{.ts,.js}`],
   migrations: ['../migrations/**/*{.ts,.js}'],
   subscribers: ['../subscribers/**/*{.ts,.js}'],

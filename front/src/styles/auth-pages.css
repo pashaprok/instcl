@@ -1,3 +1,5 @@
+@import 'vars.css';
+
 .auth-content {
     position: relative;
     margin: 0 auto;
@@ -24,24 +26,24 @@
     border-radius: 10px;
     border: none;
     background-color: #283340;
-    color: #fff;
+    color: var(--colorLight);
     transition: border 0.2s ease-in-out;
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
 }
 
 .input-error {
-    border-top: 2px solid #C12D2E;
-    border-bottom: 2px solid #C12D2E;
+    border-top: 2px solid var(--colorDanger);
+    border-bottom: 2px solid var(--colorDanger);
 }
 
 .auth-input::placeholder {
-    color: #8A98A4;
+    color: var(--colorGrey);
 }
 
 .errors-popover {
-    background-color: #1C2733;
-    color: #8A98A4;
+    background-color: var(--colorDark);
+    color: var(--colorGrey);
     transition: height 0.2s ease-in-out;
 }
 
@@ -60,21 +62,17 @@
     padding: 15px 30px;
     border-radius: 10px;
     border: none;
-    background-color: #4BA0EC;
-    color: #fff;
+    background-color: var(--colorLightMain);
+    color: var(--colorLight);
 }
 
 .auth-button:hover {
     cursor: pointer;
-    background-color: #3b76af;
+    background-color: var(--colorLightMain);
 }
 
 .auth-question {
     margin-top: 30px;
     text-align: center;
     width: 100%;
-}
-
-.photo-upload-input {
-
 }

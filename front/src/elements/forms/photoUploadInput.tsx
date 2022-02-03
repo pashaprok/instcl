@@ -1,7 +1,7 @@
 import React from 'react';
 import { refObj, useStateFunctionAny } from '../../types/common.types';
 
-interface PhotoUploadInputI {
+interface PhotoUploadInputProps {
 	cls: string;
 	imageRef: refObj;
 	setFile: useStateFunctionAny;
@@ -16,9 +16,11 @@ function onChangeFile(
 	}
 }
 
-export function PhotoUploadInput(props: PhotoUploadInputI) {
-	const { cls, setFile, imageRef } = props;
-
+export function PhotoUploadInput({
+	cls,
+	setFile,
+	imageRef,
+}: PhotoUploadInputProps) {
 	const onChange = (e: React.ChangeEvent<any>) => {
 		onChangeFile(e, setFile);
 	};
