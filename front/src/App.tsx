@@ -2,9 +2,9 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { LoginPage } from './pages/login.page';
-import { AllUsersPage } from './pages/allUsers.page';
 import { RegisterPage } from './pages/register.page';
 import { AccountPage } from './pages/account.page';
+import { NotFoundPage } from './pages/not-found.page';
 
 function App() {
 	return (
@@ -13,7 +13,7 @@ function App() {
 				<Route path='/' element={<LoginPage />} />
 				<Route path='/register' element={<RegisterPage />} />
 				<Route path='/account' element={<AccountPage />} />
-				<Route path='/users' element={<AllUsersPage />} />
+				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
 		</BrowserRouter>
 	);
